@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.labs.rating.ui.widgettypes">
+    <extension
+            target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
+            point="widgettypes">
+
+        <widgetType name="rating">
+            <configuration>
+                <title>Document Rating</title>
+                <description>
+                    <p>
+                        Document rating Widget
+                    </p>
+                </description>
+                <supportedModes>
+                    <mode>view</mode>
+                    <mode>edit</mode>
+                </supportedModes>
+            </configuration>
+            <handler-class>
+                org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+            </handler-class>
+            <property name="template">/rating-view/rating.xhtml</property>
+        </widgetType>
+
+        <widgetType name="rating_avg">
+            <configuration>
+                <title>Document Average Rating</title>
+                <description>
+                    <p>
+                        Document Average Rating Widget
+                    </p>
+                </description>
+                <supportedModes>
+                    <mode>view</mode>
+                </supportedModes>
+            </configuration>
+            <handler-class>
+                org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+            </handler-class>
+            <property name="template">/rating-view/rating-avg.xhtml</property>
+        </widgetType>
+    </extension>
+
+
+
+
+</component>

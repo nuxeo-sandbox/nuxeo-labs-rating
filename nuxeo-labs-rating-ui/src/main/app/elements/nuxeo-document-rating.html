@@ -1,0 +1,56 @@
+<dom-module id='nuxeo-document-rating'>
+   <template>
+      <style>
+         .main {
+            width: 100%;
+         }
+
+         .rowElement {
+            display: inline-flex;
+            vertical-align: middle;
+         }
+
+         .container {
+            margin: 2%;
+         }
+
+         .average {
+            margin-left: 4%;
+            margin-bottom: 1%;
+         }
+
+         .label {
+            margin-right: 2%;
+         }
+      </style>
+      <div class="main">
+         <div class="container">
+            <div class="average">
+               <nuxeo-star-rating-avg doc-id=[[docId]]></nuxeo-star-rating-avg>
+            </div>
+            <nuxeo-star-rating-distribution doc-id=[[docId]]></nuxeo-star-rating-distribution>
+         </div>
+         <div class="container">
+            <div class="rowElement label">My rating</div>
+            <div class="rowElement">
+               <nuxeo-star-rating-document doc-id=[[docId]]></nuxeo-star-rating-document>
+            </div>
+         </div>
+      </div>
+   </template>
+   <script>
+      Polymer({
+         is: 'nuxeo-document-rating',
+         properties: {
+            docId: {
+               type: String,
+               notify: true
+            }
+         },
+
+         ready: function() {
+            console.log("-- nuxeo-document-rating ready");
+         }
+      });
+   </script>
+</dom-module>

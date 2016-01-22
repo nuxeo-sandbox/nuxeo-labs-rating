@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.labs.rating.ui.actions">
+    <extension point="actions" target="org.nuxeo.ecm.platform.actions.ActionService">
+        <action id="RatingForm" label="Rating" order="400" type="widget">
+            <category>SUMMARY_PANEL_LEFT</category>
+            <properties>
+                <property name="widgetName">rating</property>
+                <property name="ajaxSupport">false</property>
+            </properties>
+        </action>
+    </extension>
+
+    <extension point="actions" target="org.nuxeo.ecm.platform.actions.ActionService">
+        <action id="RatingAvg" label="Rating" order="0" type="widget">
+            <category>SUMMARY_PANEL_RIGHT</category>
+            <properties>
+                <property name="widgetName">rating_avg</property>
+                <property name="ajaxSupport">false</property>
+            </properties>
+        </action>
+    </extension>
+</component>

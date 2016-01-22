@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.labs.rating.ui.widget">
+    <extension point="widgets" target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager">
+        <widget name="rating" type="rating">
+            <properties widgetMode="view">
+                <property name="category">INFO_VIEW_PANEL_LEFT</property>
+            </properties>
+            <controls mode="any">
+                <control name="requireSurroundingForm">false</control>
+            </controls>
+        </widget>
+    </extension>
+
+    <extension point="widgets" target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager">
+        <widget name="rating_avg" type="rating_avg">
+            <properties widgetMode="view">
+                <property name="category">INFO_VIEW_PANEL_LEFT</property>
+            </properties>
+            <controls mode="any">
+                <control name="requireSurroundingForm">false</control>
+            </controls>
+        </widget>
+    </extension>
+</component>

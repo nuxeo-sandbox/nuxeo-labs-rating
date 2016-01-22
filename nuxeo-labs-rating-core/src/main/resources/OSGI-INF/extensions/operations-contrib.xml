@@ -1,0 +1,13 @@
+<component name="org.nuxeo.labs.ratings.core.operations">
+
+    <extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent"
+               point="operations">
+        <operation class="org.nuxeo.labs.rating.operations.Rate"/>
+    </extension>
+
+    <extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent"
+               point="operations">
+        <operation class="org.nuxeo.labs.rating.operations.GetRating"/>
+    </extension>
+
+</component>

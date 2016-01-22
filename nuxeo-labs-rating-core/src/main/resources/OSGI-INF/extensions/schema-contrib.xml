@@ -1,0 +1,5 @@
+<component name="org.nuxeo.labs.ratings.core.schema">
+    <extension target="org.nuxeo.ecm.core.schema.TypeService" point="schema">
+        <schema name="rating" prefix="rating" override="true" src="data/schemas/rating.xsd"/>
+    </extension>
+</component>

@@ -1,0 +1,106 @@
+<dom-module id='nuxeo-star-rating-avg'>
+      <template>
+            <style>
+            .rowElement {
+               display: inline-flex;
+               vertical-align: middle;
+            }
+            </style>
+            <nuxeo-es-search id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-search>
+            <template is="dom-if" if="{{average}}">
+               <div>
+                  <nuxeo-star-rating class="rowElement" rating={{average_star}}></nuxeo-star-rating>
+                  <div class="rowElement">[[doc_count]]</div>
+               </div>
+            </template>
+      </template>
+      <script>
+            Polymer({
+                  is: 'nuxeo-star-rating-avg',
+                  // Expose properties
+                  properties: {
+                        docId: {
+                              type: String,
+                              notify: true
+                        },
+                        query: {
+                              type: Object,
+                              notify: true
+                        },
+                        aggregates: {
+                              type: Object,
+                              notify: true
+                        },
+                        aggregations: {
+                              type: Object,
+                              notify: true
+                        },
+                        average: {
+                              type: Number,
+                              notify: true
+                        },
+                        average_star: {
+                              type: Number,
+                              notify: true
+                        },
+                        doc_count: {
+                           type: Number,
+                           notify: true
+                        }
+                  },
+
+                  observers: [
+                        // update the suggestion
+                        'updateDocId(docId)',
+                        'updateAverage(aggregations)'
+                  ],
+
+                  ready: function() {
+                   console.log("-- nuxeo-star-rating-avg ready");
+                  },
+
+                  updateDocId: function() {
+                        if (this.docId === undefined)
+                              return;
+                        this.docId = this.docId.replace("\/", "");
+                        this.query = {
+                              bool: {
+                                    must: [
+                                          {
+                                                constant_score: {
+                                                      filter: {
+                                                            term: {
+                                                                  "rating:docId": this.docId
+                                                            }
+                                                      }
+                                                }
+                                          }
+                                    ]
+                              }
+                        },
+                        this.aggregates = {
+                              doc_rating_agg_filter: {
+                                    filter: {
+                                          match_all: {}
+                                    },
+                                    aggregations: {
+                                          doc_rating_avg_agg: {
+                                             avg : {
+                                                field : "rating:rating",
+                                             }
+                                          }
+                                    }
+                              }
+                        };
+                        this.$.ratingProvider.execute();
+                  },
+
+                  updateAverage: function() {
+                     this.doc_count = this.aggregations.doc_rating_agg_filter.doc_count;
+                     this.average = this.aggregations.doc_rating_agg_filter.doc_rating_avg_agg.value;
+                     this.average_star = Math.round(this.average);
+                  }
+            });
+      </script>
+
+</dom-module>

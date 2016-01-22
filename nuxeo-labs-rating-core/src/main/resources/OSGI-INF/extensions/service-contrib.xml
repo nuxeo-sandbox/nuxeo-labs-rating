@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.labs.rating.core.component">
+
+    <service>
+        <provide interface="org.nuxeo.labs.rating.service.RatingService" />
+    </service>
+
+    <implementation class="org.nuxeo.labs.rating.service.RatingServiceImpl" />
+
+</component>
