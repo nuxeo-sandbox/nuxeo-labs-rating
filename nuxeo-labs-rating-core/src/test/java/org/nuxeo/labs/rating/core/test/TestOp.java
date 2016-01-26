@@ -46,8 +46,7 @@ public class TestOp {
         ctx.setInput(doc);
         ctx.setCoreSession(session);
         OperationChain chain = new OperationChain("TestVote");
-        chain.add(Rate.ID).
-                set("rating", 3);
+        chain.add(Rate.ID).set("rating", 3).set("comment","My Comment");
         as.run(ctx, chain);
 
         //check rating
@@ -56,6 +55,7 @@ public class TestOp {
 
         Assert.assertNotNull(rating);
         Assert.assertEquals(3,rating.getRating());
+        Assert.assertEquals("My Comment",rating.getComment());
 
     }
 
@@ -66,7 +66,7 @@ public class TestOp {
 
         DocumentModel doc = session.createDocumentModel("/","File","File");
         doc = session.createDocument(doc);
-        Rating rating = new RatingImpl(2,doc.getId(),doc.getTitle(),session.getPrincipal().getName());
+        Rating rating = new RatingImpl(2,doc.getId(),doc.getTitle(),session.getPrincipal().getName(),"My comment");
         RatingService service = Framework.getService(RatingService.class);
         service.rate(session,rating);
 
@@ -79,6 +79,6 @@ public class TestOp {
         StringBlob blob = (StringBlob) as.run(ctx, chain);
 
         Assert.assertNotNull(blob);
-        Assert.assertEquals("{\"rating\":2}",blob.getString());
+        Assert.assertEquals("{\"rating\":2,\"comment\":\"My comment\"}",blob.getString());
     }
 }

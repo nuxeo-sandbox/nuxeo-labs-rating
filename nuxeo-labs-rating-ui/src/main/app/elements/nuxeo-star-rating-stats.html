@@ -1,4 +1,4 @@
-<dom-module id='nuxeo-document-rating'>
+<dom-module id='nuxeo-star-rating-stats'>
    <template>
       <style>
          .main {
@@ -11,11 +11,11 @@
          }
 
          .container {
-            margin: 2%;
+            margin-top: 2%;
+            margin-bottom: : 2%;
          }
 
          .average {
-            margin-left: 4%;
             margin-bottom: 1%;
          }
 
@@ -30,17 +30,11 @@
             </div>
             <nuxeo-star-rating-distribution doc-id=[[docId]]></nuxeo-star-rating-distribution>
          </div>
-         <div class="container">
-            <div class="rowElement label">My rating</div>
-            <div class="rowElement">
-               <nuxeo-star-rating-document doc-id=[[docId]]></nuxeo-star-rating-document>
-            </div>
-         </div>
       </div>
    </template>
    <script>
       Polymer({
-         is: 'nuxeo-document-rating',
+         is: 'nuxeo-star-rating-stats',
          properties: {
             docId: {
                type: String,

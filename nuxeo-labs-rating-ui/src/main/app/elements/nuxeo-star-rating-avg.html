@@ -9,7 +9,7 @@
             <nuxeo-es-search id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-search>
             <template is="dom-if" if="{{average}}">
                <div>
-                  <nuxeo-star-rating class="rowElement" rating={{average_star}}></nuxeo-star-rating>
+                  <nuxeo-star-rating class="rowElement" rating={{average_star}} read-only="true"></nuxeo-star-rating>
                   <div class="rowElement">[[doc_count]]</div>
                </div>
             </template>

@@ -8,4 +8,5 @@ Bundle-SymbolicName: nuxeo-km-scoring-admin-ui;singleton:=true
 Nuxeo-Component: OSGI-INF/extensions/auth-config.xml,
     OSGI-INF/extensions/widget-types-contrib.xml,
     OSGI-INF/extensions/widget-contrib.xml,
-    OSGI-INF/extensions/action-contrib.xml
+    OSGI-INF/extensions/action-contrib.xml,
+    OSGI-INF/extensions/content-view-contrib.xml

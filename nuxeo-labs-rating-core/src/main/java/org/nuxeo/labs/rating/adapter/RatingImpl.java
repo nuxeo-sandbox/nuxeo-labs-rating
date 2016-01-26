@@ -9,12 +9,15 @@ public class RatingImpl implements Rating {
     protected String docId;
     protected String docTitle;
     protected String username;
+    protected String comment;
 
-    public RatingImpl(long rating, String docId, String docTitle, String username) {
+
+    public RatingImpl(long rating, String docId, String docTitle, String username, String comment) {
         this.rating = rating;
         this.docId = docId;
         this.docTitle = docTitle;
         this.username = username;
+        this.comment = comment;
     }
 
     @Override
@@ -58,10 +61,21 @@ public class RatingImpl implements Rating {
     }
 
     @Override
+    public String getComment() {
+        return comment;
+    }
+
+    @Override
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    @Override
     public void copyValue(Rating rating) {
         this.rating = rating.getRating();
         this.docId = rating.getDocId();
         this.docTitle = rating.getDocTitle();
         this.username = rating.getUsername();
+        this.comment = rating.getComment();
     }
 }

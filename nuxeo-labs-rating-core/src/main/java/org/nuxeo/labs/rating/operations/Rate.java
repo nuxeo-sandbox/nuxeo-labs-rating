@@ -30,11 +30,14 @@ public class Rate {
 	@Param(name = "rating")
 	protected int rating;
 
+	@Param(name = "comment")
+	protected String comment;
+
     @OperationMethod
     public DocumentModel run(DocumentModel doc) {
 		String username = session.getPrincipal().getName();
 		RatingService service = Framework.getService(RatingService.class);
-		Rating ratingObj = new RatingImpl(rating,doc.getId(),doc.getTitle(),username);
+		Rating ratingObj = new RatingImpl(rating,doc.getId(),doc.getTitle(),username,comment);
 		service.rate(session,ratingObj);
 		session.save();
 		return doc;

@@ -1,71 +1,105 @@
 <dom-module id='nuxeo-star-rating-document'>
-  <template>
-    <style></style>
-    <nuxeo-operation id="GetRating" op="GetRating" input="{{docId}}" response="{{response}}"></nuxeo-operation>
-    <nuxeo-operation id="Rate" op="Rate" input="{{docId}}" params="{{params}}"></nuxeo-operation>
-    <nuxeo-star-rating  rating={{vote}}></nuxeo-star-rating>
-  </template>
-  <script>
-    Polymer({
-      is: 'nuxeo-star-rating-document',
-      properties: {
-        docId: {
-          type: String,
-          notify: true
-        },
-        params: {
-          type: Object,
-          notify: true
-        },
-        response: {
-          type: Object,
-          notify: true
-        },
-        vote: {
-          type: Number,
-          value: 0,
-          notify: true
-       },
-       save: {
-             type: Boolean,
-             value: false
-       }
-      },
+   <template>
+      <style>
+         .comment {
+            margin-top: 5%;
+            margin-bottom: 5%;
+         }
+      </style>
+      <nuxeo-operation id="GetRating" op="GetRating" input="{{docId}}" response="{{response}}"></nuxeo-operation>
+      <nuxeo-operation id="Rate" op="Rate" input="{{docId}}" params="{{params}}"></nuxeo-operation>
+      <nuxeo-star-rating rating={{vote}}></nuxeo-star-rating>
+      <paper-textarea class="comment" label="My Comment" value={{comment}}></paper-textarea>
+      <template is="dom-if" if="{{changed}}">
+         <paper-button raised on-click="handleSave">Save</paper-button>
+         <paper-button raised on-click="handleCancel">Cancel</paper-button>
+      </template>
+   </template>
+   <script>
+      Polymer({
+         is: 'nuxeo-star-rating-document',
+         properties: {
+            docId: {
+               type: String,
+               notify: true
+            },
+            params: {
+               type: Object,
+               notify: true
+            },
+            response: {
+               type: Object,
+               notify: true
+            },
+            vote: {
+               type: Number,
+               value: 0,
+               notify: true
+            },
+            save: {
+               type: Boolean,
+               value: false
+            },
+            comment: {
+               type: String,
+               notify: true
+            },
+            changed: {
+               type: Boolean,
+               notify: true,
+               value: false
+            }
+         },
 
-      observers: [
-        // update the suggestion
-        'updateVote(vote)',
-        'updateDocId(docId)',
-        'processResponse(response)'
-      ],
+         observers: [
+            // update the suggestion
+            'change(vote,comment)',
+            'updateDocId(docId)',
+            'processResponse(response)'
+         ],
 
-      ready: function() {
-        console.log("-- nuxeo-star-rating-my ready");
-      },
+         ready: function() {
+            console.log("-- nuxeo-star-rating-my ready");
+         },
 
-      processResponse: function() {
-        if (this.response === undefined || this.response === null)
-          return;
-        var myvote = JSON.parse(this.response);
-        this.vote = myvote.rating;
-        this.save = true;
-      },
+         processResponse: function() {
+            if (this.response === undefined || this.response === null)
+               return;
+            var myvote = JSON.parse(this.response);
+            this.vote = myvote.rating;
+            this.comment = myvote.comment;
+            this.save = true;
+         },
 
-      updateDocId: function() {
-        if (this.docId === undefined)
-          return;
-        this.docId = this.docId.replace("\/", "");
-        this.$.GetRating.execute();
-      },
+         updateDocId: function() {
+            if (this.docId === undefined)
+               return;
+            this.docId = this.docId.replace("\/", "");
+            this.$.GetRating.execute();
+         },
 
-      updateVote: function() {
-        if (!this.save) return;
-        this.params = {
-          rating: this.vote
-        };
-        this.$.Rate.execute();
-      }
+         handleSave: function() {
+            if (!this.save)
+               return;
+            this.params = {
+               rating: this.vote,
+               comment: this.comment
+            };
+            this.$.Rate.execute();
+            this.changed = false;
+         },
 
-    });
-  </script>
+         handleCancel: function() {
+            this.processResponse();
+            this.changed = false;
+         },
+
+         change: function() {
+            if (this.save) {
+               this.changed = true;
+            }
+         }
+
+      });
+   </script>
 </dom-module>

@@ -54,10 +54,22 @@ public class RatingAdapter implements Rating {
     }
 
     @Override
+    public String getComment() {
+        String comment =  (String) doc.getPropertyValue("rating:comment");
+        return comment != null ? comment : "";
+    }
+
+    @Override
+    public void setComment(String comment) {
+        doc.setPropertyValue("rating:comment",comment);
+    }
+
+    @Override
     public void copyValue(Rating rating) {
         setDocId(rating.getDocId());
         setDocTitle(rating.getDocTitle());
         setUsername(rating.getUsername());
         setRating(rating.getRating());
+        setComment(rating.getComment());
     }
 }

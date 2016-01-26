@@ -5,22 +5,26 @@ package org.nuxeo.labs.rating.adapter;
  */
 public interface Rating {
 
-    public void setRating(long rating);
+    void setRating(long rating);
 
-    public long getRating();
+    long getRating();
 
-    public String getUsername();
+    String getUsername();
 
-    public void setUsername(String username);
+    void setUsername(String username);
 
-    public String getDocId();
+    String getDocId();
 
-    public void setDocId(String docId);
+    void setDocId(String docId);
 
-    public String getDocTitle();
+    String getDocTitle();
 
-    public void setDocTitle(String docTitle);
+    void setDocTitle(String docTitle);
 
-    public void copyValue(Rating rating);
+    String getComment();
+
+    void setComment(String comment);
+
+    void copyValue(Rating rating);
 
 }

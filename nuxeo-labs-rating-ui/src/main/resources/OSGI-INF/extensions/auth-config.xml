@@ -1,4 +1,4 @@
-<component name="org.nuxeo.km.authentication.contrib">
+<component name="org.nuxeo.labs.rating.authentication.contrib">
   <extension
           point="startURL"
           target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService">

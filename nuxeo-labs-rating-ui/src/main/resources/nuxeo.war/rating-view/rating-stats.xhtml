@@ -13,9 +13,11 @@
 
   <nxr:import src="/rating/elements/elements.vulcanized.html" target="#{pageJsTarget}" />
 
+  <div class="widgetLabel summaryTitle">Rating</div>
+
   <template is="dom-bind">
     <nuxeo-connection id="nx_connection" url="#{baseURL}"></nuxeo-connection>
-    <nuxeo-document-rating doc-id="#{currentDocument.id}"></nuxeo-document-rating>
+    <nuxeo-star-rating-stats doc-id="#{currentDocument.id}"></nuxeo-star-rating-stats>
   </template>
 
 </h:panelGroup>

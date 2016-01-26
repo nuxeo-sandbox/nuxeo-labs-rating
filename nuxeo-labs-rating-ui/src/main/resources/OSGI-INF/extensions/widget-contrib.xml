@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.labs.rating.ui.widget">
     <extension point="widgets" target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager">
-        <widget name="rating" type="rating">
+        <widget name="rating_stats" type="rating_stats">
             <properties widgetMode="view">
                 <property name="category">INFO_VIEW_PANEL_LEFT</property>
             </properties>
@@ -13,6 +13,17 @@
 
     <extension point="widgets" target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager">
         <widget name="rating_avg" type="rating_avg">
+            <properties widgetMode="view">
+                <property name="category">INFO_VIEW_PANEL_LEFT</property>
+            </properties>
+            <controls mode="any">
+                <control name="requireSurroundingForm">false</control>
+            </controls>
+        </widget>
+    </extension>
+
+    <extension point="widgets" target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager">
+        <widget name="rating_user" type="rating_user">
             <properties widgetMode="view">
                 <property name="category">INFO_VIEW_PANEL_LEFT</property>
             </properties>

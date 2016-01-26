@@ -4,6 +4,8 @@
 
 package org.nuxeo.labs.rating.operations;
 
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
 import org.nuxeo.ecm.automation.core.Constants;
 import org.nuxeo.ecm.automation.core.annotations.Context;
 import org.nuxeo.ecm.automation.core.annotations.Operation;
@@ -22,6 +24,8 @@ import org.nuxeo.runtime.api.Framework;
 @Operation(id= GetRating.ID, category=Constants.CAT_DOCUMENT, label="Rate", description="")
 public class GetRating {
 
+	final JsonNodeFactory factory = JsonNodeFactory.instance;
+
     public static final String ID = "GetRating";
 
 	@Context
@@ -33,10 +37,17 @@ public class GetRating {
 		RatingService service = Framework.getService(RatingService.class);
 		Rating rating = service.getRating(session,doc.getId(),username);
 		StringBlob results;
+
+		ObjectNode object = factory.objectNode();
+
 		if (rating!=null) {
-			results = new StringBlob("{\"rating\":"+rating.getRating()+"}");
+			object.put("rating",rating.getRating());
+			object.put("comment",rating.getComment());
+			results = new StringBlob(object.toString());
 		} else {
-			results = new StringBlob("{\"rating\":"+0+"}");
+			object.put("rating",0);
+			object.put("comment","");
+			results = new StringBlob(object.toString());
 		}
 		return results;
     }    

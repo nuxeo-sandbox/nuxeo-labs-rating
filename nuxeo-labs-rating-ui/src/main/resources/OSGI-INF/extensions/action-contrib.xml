@@ -1,10 +1,44 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.labs.rating.ui.actions">
+
     <extension point="actions" target="org.nuxeo.ecm.platform.actions.ActionService">
-        <action id="RatingForm" label="Rating" order="400" type="widget">
+        <action id="Ratings" link="/tabs/tab_Ratings.xhtml" order="250" label="Ratings" type="rest_document_link">
+            <filter-id>rating_is_folderish</filter-id>
+            <category>VIEW_ACTION_LIST</category>
+            <properties>
+                <property name="ajaxSupport">false</property>
+            </properties>
+        </action>
+    </extension>
+
+    <extension point="actions" target="org.nuxeo.ecm.platform.actions.ActionService">
+        <action accessKey="v" icon="/icons/file.gif" id="TAB_VIEW" label="action.view.summary"
+                link="/incl/tabs/document_view.xhtml" order="0" type="rest_document_link">
+            <category>VIEW_ACTION_LIST</category>
+            <filter-id>view</filter-id>
+            <properties>
+                <property name="ajaxSupport">false</property>
+            </properties>
+        </action>
+    </extension>
+
+    <extension point="actions" target="org.nuxeo.ecm.platform.actions.ActionService">
+        <action id="RatingDistribution" label="Rating" order="400" type="widget">
+            <filter-id>rating_is_folderish</filter-id>
             <category>SUMMARY_PANEL_LEFT</category>
             <properties>
-                <property name="widgetName">rating</property>
+                <property name="widgetName">rating_stats</property>
+                <property name="ajaxSupport">false</property>
+            </properties>
+        </action>
+    </extension>
+
+    <extension point="actions" target="org.nuxeo.ecm.platform.actions.ActionService">
+        <action id="RatingUser" label="Rating" order="450" type="widget">
+            <filter-id>rating_is_folderish</filter-id>
+            <category>SUMMARY_PANEL_LEFT</category>
+            <properties>
+                <property name="widgetName">rating_user</property>
                 <property name="ajaxSupport">false</property>
             </properties>
         </action>
@@ -12,6 +46,7 @@
 
     <extension point="actions" target="org.nuxeo.ecm.platform.actions.ActionService">
         <action id="RatingAvg" label="Rating" order="0" type="widget">
+            <filter-id>rating_is_folderish</filter-id>
             <category>SUMMARY_PANEL_RIGHT</category>
             <properties>
                 <property name="widgetName">rating_avg</property>
@@ -19,4 +54,14 @@
             </properties>
         </action>
     </extension>
+
+    <extension point="filters" target="org.nuxeo.ecm.platform.actions.ActionService">
+        <filter id="rating_is_folderish">
+            <rule grant="false">
+                <facet>Folderish</facet>
+            </rule>
+        </filter>
+    </extension>
+
+
 </component>
