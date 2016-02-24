@@ -122,6 +122,7 @@ gulp.task('elements', function() {
 });
 
 // Lint JavaScript
+if(false) {
 gulp.task('lint', function() {
   return gulp.src([
       appl('scripts/**/*.js'),
@@ -138,6 +139,7 @@ gulp.task('lint', function() {
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
+}
 
 // Optimize images
 gulp.task('images', function() {
@@ -249,7 +251,7 @@ gulp.task('clean', function() {
 });
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles', 'elements', 'images'], function() {
+gulp.task('serve', [/*'lint',*/ 'styles', 'elements', 'images'], function() {
 
   // setup our local proxy
   var proxyOptions = require('url').parse('http://localhost:8080/nuxeo');
@@ -283,7 +285,7 @@ gulp.task('serve', ['styles', 'elements', 'images'], function() {
   gulp.watch([appl('**/*.html')], reload);
   gulp.watch([appl('styles/**/*.css')], ['styles', reload]);
   gulp.watch([appl('elements/**/*.css')], ['elements', reload]);
-  gulp.watch([appl('{scripts,elements}/**/{*.js,*.html}')], ['lint']);
+  //gulp.watch([appl('{scripts,elements}/**/{*.js,*.html}')], ['lint']);
   gulp.watch([appl('images/**/*')], reload);
 });
 
@@ -315,7 +317,7 @@ gulp.task('default', ['clean'], function(cb) {
   // Uncomment 'cache-config' if you are going to use service workers.
   runSequence(
     ['copy', 'styles'],
-    'elements', ['images', 'fonts', 'html'],
+    'elements', [/*'lint',*/ 'images', 'fonts', 'html'],
     'vulcanize', // 'cache-config',
     cb);
 });

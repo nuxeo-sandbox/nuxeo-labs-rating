@@ -10,5 +10,8 @@
             <schema name="uid"/>
             <facet name="HiddenInNavigation"/>
         </doctype>
+        <facet name="Rated">
+            <schema name="rated"/>
+        </facet>
     </extension>
 </component>

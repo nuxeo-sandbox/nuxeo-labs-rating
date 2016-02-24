@@ -7,6 +7,7 @@ import org.nuxeo.ecm.automation.test.AutomationFeature;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
+import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
 import org.nuxeo.labs.rating.adapter.Rating;
@@ -43,12 +44,16 @@ public class TestService {
         service.rate(session,rating);
 
         DocumentModelList list = session.query("Select * From Rating where rating:docId = '"+doc.getId()+"'");
+        doc = session.getDocument(new IdRef(doc.getId()));
 
+        //check rating
         Assert.assertTrue(list.size()>0);
-
         Rating savedRating = list.get(0).getAdapter(Rating.class);
-
         Assert.assertEquals(5,savedRating.getRating());
+
+        //check average
+        Assert.assertEquals(1,(long)doc.getPropertyValue("rated:count"));
+        Assert.assertEquals(5,(double)doc.getPropertyValue("rated:avg"),0.1f);
 
         //update rating
         rating.setRating(1);
