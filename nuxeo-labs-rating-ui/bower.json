@@ -2,17 +2,10 @@
   "name": "nuxeo-labs-rating-ui",
   "private": true,
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.1.0",
-    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
-    "paper-elements": "PolymerElements/paper-elements#^1.0.1",
-    "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
-    "neon-elements": "PolymerElements/neon-elements#^1.0.0",
-    "page": "visionmedia/page.js#~1.6.3",
-    "nuxeo-elements": "nuxeo/nuxeo-elements#~0.2.4",
-    "nuxeo-dataviz-elements": "michaelva/nuxeo-dataviz-elements#NXP-18712-improve-nuxeo-es-search-interface",
-    "paper-input": "PolymerElements/paper-input#~1.1.3",
-    "paper-button": "PolymerElements/paper-button#~1.0.11",
-    "moment": "~2.11.1"
-  },
-  "devDependencies": {}
+    "polymer": "Polymer/polymer#1.2.4",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.5",
+    "nuxeo-elements": "nuxeo/nuxeo-elements#6bcadc28cc0acc26cbc813350bd2a6b3fc122076",
+    "nuxeo-labs-elements": "nuxeo-sandbox/nuxeo-labs-elements#master"
+  }
 }
+
