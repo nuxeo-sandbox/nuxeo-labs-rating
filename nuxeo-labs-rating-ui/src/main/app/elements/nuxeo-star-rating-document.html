@@ -6,7 +6,7 @@
             margin-bottom: 5%;
          }
       </style>
-      <nuxeo-operation id="GetRating" op="GetRating" input="{{docId}}" response="{{response}}"></nuxeo-operation>
+      <nuxeo-operation id="GetRating" op="GetRating" input="{{docId}}" on-response="handleResponse"></nuxeo-operation>
       <nuxeo-operation id="Rate" op="Rate" input="{{docId}}" params="{{params}}"></nuxeo-operation>
       <nuxeo-star-rating rating={{vote}}></nuxeo-star-rating>
       <paper-textarea class="comment" label="My Comment" value={{comment}}></paper-textarea>
@@ -24,10 +24,6 @@
                notify: true
             },
             params: {
-               type: Object,
-               notify: true
-            },
-            response: {
                type: Object,
                notify: true
             },
@@ -54,18 +50,15 @@
          observers: [
             // update the suggestion
             'change(vote,comment)',
-            'updateDocId(docId)',
-            'processResponse(response)'
+            'updateDocId(docId)'
          ],
 
          ready: function() {
             console.log("-- nuxeo-star-rating-my ready");
          },
 
-         processResponse: function() {
-            if (this.response === undefined || this.response === null)
-               return;
-            var myvote = JSON.parse(this.response);
+         handleResponse: function(e) {
+            var myvote = e.detail.response;
             this.vote = myvote.rating;
             this.comment = myvote.comment;
             this.save = true;
