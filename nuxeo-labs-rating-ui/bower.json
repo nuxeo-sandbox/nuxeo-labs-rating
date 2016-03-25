@@ -4,7 +4,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#1.2.4",
     "paper-elements": "PolymerElements/paper-elements#^1.0.5",
-    "nuxeo-elements": "nuxeo/nuxeo-elements#6bcadc28cc0acc26cbc813350bd2a6b3fc122076",
+    "nuxeo-elements": "nuxeo/nuxeo-elements#^0.3.0",
     "nuxeo-labs-elements": "nuxeo-sandbox/nuxeo-labs-elements#master"
   }
 }
