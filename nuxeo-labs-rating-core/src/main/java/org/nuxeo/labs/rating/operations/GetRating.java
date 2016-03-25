@@ -11,9 +11,9 @@ import org.nuxeo.ecm.automation.core.annotations.Context;
 import org.nuxeo.ecm.automation.core.annotations.Operation;
 import org.nuxeo.ecm.automation.core.annotations.OperationMethod;
 import org.nuxeo.ecm.core.api.Blob;
+import org.nuxeo.ecm.core.api.Blobs;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.impl.blob.StringBlob;
 import org.nuxeo.labs.rating.adapter.Rating;
 import org.nuxeo.labs.rating.service.RatingService;
 import org.nuxeo.runtime.api.Framework;
@@ -33,23 +33,21 @@ public class GetRating {
 
     @OperationMethod
     public Blob run(DocumentModel doc) {
+
 		String username = session.getPrincipal().getName();
 		RatingService service = Framework.getService(RatingService.class);
 		Rating rating = service.getRating(session,doc.getId(),username);
-		StringBlob results;
 
 		ObjectNode object = factory.objectNode();
 
 		if (rating!=null) {
 			object.put("rating",rating.getRating());
 			object.put("comment",rating.getComment());
-			results = new StringBlob(object.toString());
 		} else {
 			object.put("rating",0);
 			object.put("comment","");
-			results = new StringBlob(object.toString());
 		}
-		return results;
+		return Blobs.createBlob(object.toString(), "application/json");
     }    
 
 }
