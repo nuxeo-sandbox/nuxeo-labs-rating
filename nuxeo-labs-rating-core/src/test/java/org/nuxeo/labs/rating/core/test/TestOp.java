@@ -1,3 +1,21 @@
+/*
+ * (C) Copyright 2016 Nuxeo SA (http://nuxeo.com/) and others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Contributors:
+ *     
+ */
 package org.nuxeo.labs.rating.core.test;
 
 import org.junit.Assert;
@@ -29,9 +47,9 @@ import javax.inject.Inject;
  */
 
 @RunWith(FeaturesRunner.class)
-@Features({AutomationFeature.class})
+@Features({ AutomationFeature.class })
 @RepositoryConfig(cleanup = Granularity.METHOD)
-@Deploy({"nuxeo-labs-rating-core"})
+@Deploy({ "nuxeo-labs-rating-core" })
 public class TestOp {
 
     @Inject
@@ -39,36 +57,34 @@ public class TestOp {
 
     @Test
     public void testRate() throws Exception {
-        DocumentModel doc = session.createDocumentModel("/","File","File");
+        DocumentModel doc = session.createDocumentModel("/", "File", "File");
         doc = session.createDocument(doc);
         AutomationService as = Framework.getService(AutomationService.class);
         OperationContext ctx = new OperationContext();
         ctx.setInput(doc);
         ctx.setCoreSession(session);
         OperationChain chain = new OperationChain("TestVote");
-        chain.add(Rate.ID).set("rating", 3).set("comment","My Comment");
+        chain.add(Rate.ID).set("rating", 3).set("comment", "My Comment");
         as.run(ctx, chain);
 
-        //check rating
+        // check rating
         RatingService service = Framework.getService(RatingService.class);
-        Rating rating = service.getRating(session,doc.getId(),session.getPrincipal().getName());
+        Rating rating = service.getRating(session, doc.getId(), session.getPrincipal().getName());
 
         Assert.assertNotNull(rating);
-        Assert.assertEquals(3,rating.getRating());
-        Assert.assertEquals("My Comment",rating.getComment());
+        Assert.assertEquals(3, rating.getRating());
+        Assert.assertEquals("My Comment", rating.getComment());
 
     }
-
-
 
     @Test
     public void testGetRate() throws Exception {
 
-        DocumentModel doc = session.createDocumentModel("/","File","File");
+        DocumentModel doc = session.createDocumentModel("/", "File", "File");
         doc = session.createDocument(doc);
-        Rating rating = new RatingImpl(2,doc.getId(),doc.getTitle(),session.getPrincipal().getName(),"My comment");
+        Rating rating = new RatingImpl(2, doc.getId(), doc.getTitle(), session.getPrincipal().getName(), "My comment");
         RatingService service = Framework.getService(RatingService.class);
-        service.rate(session,rating);
+        service.rate(session, rating);
 
         AutomationService as = Framework.getService(AutomationService.class);
         OperationContext ctx = new OperationContext();
@@ -79,6 +95,6 @@ public class TestOp {
         StringBlob blob = (StringBlob) as.run(ctx, chain);
 
         Assert.assertNotNull(blob);
-        Assert.assertEquals("{\"rating\":2,\"comment\":\"My comment\"}",blob.getString());
+        Assert.assertEquals("{\"rating\":2,\"comment\":\"My comment\"}", blob.getString());
     }
 }

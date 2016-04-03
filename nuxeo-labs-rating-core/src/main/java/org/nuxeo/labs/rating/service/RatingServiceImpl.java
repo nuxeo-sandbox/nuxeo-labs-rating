@@ -1,3 +1,21 @@
+/*
+ * (C) Copyright 2016 Nuxeo SA (http://nuxeo.com/) and others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Contributors:
+ *     
+ */
 package org.nuxeo.labs.rating.service;
 
 import org.apache.commons.logging.Log;
@@ -17,30 +35,28 @@ import org.nuxeo.labs.rating.utils.Average;
  */
 public class RatingServiceImpl implements RatingService {
 
-
     protected static final Log log = LogFactory.getLog(RatingServiceImpl.class);
-
 
     @Override
     public void rate(CoreSession session, Rating rating) {
 
         DocumentModel targetDoc = session.getDocument(new IdRef(rating.getDocId()));
 
-        //get Previous vote
-        DocumentModel ratingDoc = getRatingDoc(session,rating.getDocId(),rating.getUsername());
-        if (ratingDoc==null) {
+        // get Previous vote
+        DocumentModel ratingDoc = getRatingDoc(session, rating.getDocId(), rating.getUsername());
+        if (ratingDoc == null) {
             DocumentModel container = getContainer(session);
-            ratingDoc = session.createDocumentModel(container.getPathAsString(),"Rating","Rating");
+            ratingDoc = session.createDocumentModel(container.getPathAsString(), "Rating", "Rating");
             ratingDoc = session.createDocument(ratingDoc);
         } else {
-            //remove old value from average
-            removeValueFromAverage(rating.getRating(),targetDoc);
+            // remove old value from average
+            removeValueFromAverage(rating.getRating(), targetDoc);
         }
         Rating adapter = ratingDoc.getAdapter(Rating.class);
         adapter.copyValue(rating);
 
-        //add new value to average
-        addValueToAverage(rating.getRating(),targetDoc);
+        // add new value to average
+        addValueToAverage(rating.getRating(), targetDoc);
 
         session.saveDocument(targetDoc);
         session.saveDocument(ratingDoc);
@@ -48,42 +64,40 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public Rating getRating(CoreSession session,String docId, String username) {
-        DocumentModel ratingDoc = getRatingDoc(session,docId,username);
-        if (ratingDoc!=null) {
+    public Rating getRating(CoreSession session, String docId, String username) {
+        DocumentModel ratingDoc = getRatingDoc(session, docId, username);
+        if (ratingDoc != null) {
             return ratingDoc.getAdapter(Rating.class);
         } else {
             return null;
         }
     }
 
-
     protected DocumentModel getContainer(CoreSession session) {
         DocumentModelList list = session.query("Select * From RatingContainer");
-        if (list.size()>0) {
+        if (list.size() > 0) {
             return list.get(0);
         } else {
-            DocumentModel container = session.createDocumentModel("/","RatingContainer","RatingContainer");
-            container.setPropertyValue("dc:title","RatingContainer");
+            DocumentModel container = session.createDocumentModel("/", "RatingContainer", "RatingContainer");
+            container.setPropertyValue("dc:title", "RatingContainer");
             container = session.createDocument(container);
 
-            //set ACL
+            // set ACL
             ACPImpl acp = new ACPImpl();
             ACLImpl acl = new ACLImpl("local");
             acp.addACL(acl);
-            ACE ace = new ACE("members","Write",true);
+            ACE ace = new ACE("members", "Write", true);
             acl.add(ace);
-            session.setACP(container.getRef(), acp,true);
+            session.setACP(container.getRef(), acp, true);
             return container;
         }
     }
 
     public DocumentModel getRatingDoc(CoreSession session, String docId, String username) {
-        String query = String.format(
-                "Select * From Rating Where rating:docId = '%s' AND " +
-                        "rating:username = '%s'",docId,username);
+        String query = String.format("Select * From Rating Where rating:docId = '%s' AND " + "rating:username = '%s'",
+                docId, username);
         DocumentModelList ratings = session.query(query);
-        if (ratings.size()>0) {
+        if (ratings.size() > 0) {
             return ratings.get(0);
         } else {
             return null;
@@ -91,20 +105,22 @@ public class RatingServiceImpl implements RatingService {
     }
 
     protected void addValueToAverage(long value, DocumentModel doc) {
-        if (!doc.hasFacet("Rated")) doc.addFacet("Rated");
+        if (!doc.hasFacet("Rated"))
+            doc.addFacet("Rated");
         double avg = (double) doc.getPropertyValue("rated:avg");
         long count = (long) doc.getPropertyValue("rated:count");
-        double newAvg = Average.addValueToAverage(value,avg,count);
-        doc.setPropertyValue("rated:avg",newAvg);
-        doc.setPropertyValue("rated:count",count+1);
+        double newAvg = Average.addValueToAverage(value, avg, count);
+        doc.setPropertyValue("rated:avg", newAvg);
+        doc.setPropertyValue("rated:count", count + 1);
     }
 
     protected void removeValueFromAverage(long value, DocumentModel doc) {
-        if (!doc.hasFacet("Rated")) doc.addFacet("Rated");
+        if (!doc.hasFacet("Rated"))
+            doc.addFacet("Rated");
         double avg = (double) doc.getPropertyValue("rated:avg");
         long count = (long) doc.getPropertyValue("rated:count");
-        double newAvg = Average.removeValueFromAverage(value,avg,count);
-        doc.setPropertyValue("rated:avg",newAvg);
-        doc.setPropertyValue("rated:count",count-1);
+        double newAvg = Average.removeValueFromAverage(value, avg, count);
+        doc.setPropertyValue("rated:avg", newAvg);
+        doc.setPropertyValue("rated:count", count - 1);
     }
 }
