@@ -5,16 +5,14 @@
   <parent>
     <groupId>org.nuxeo.labs.rating</groupId>
     <artifactId>nuxeo-labs-rating-parent</artifactId>
-    <version>7.10-SNAPSHOT</version>
+    <version>8.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>nuxeo-labs-rating-ui</artifactId>
   <name>Nuxeo Rating UI</name>
   <description>Nuxeo Rating UI</description>
 
-  <dependencies>
-
-  </dependencies>
+  <dependencies></dependencies>
 
   <build>
     <plugins>
@@ -39,32 +37,4 @@
     </plugins>
   </build>
 
-  <repositories>
-    <repository>
-      <id>public</id>
-      <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>public-snapshot</id>
-      <url>http://maven.nuxeo.org/nexus/content/groups/public-snapshot</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <scm>
-    <connection>scm:git:git://github.com/nuxeo-sandbox/nuxeo-polymer-template.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com:nuxeo-sandbox/nuxeo-polymer-template.git</developerConnection>
-    <url>https://github.com/nuxeo-sandbox/nuxeo-polymer-template</url>
-  </scm>
 </project>
