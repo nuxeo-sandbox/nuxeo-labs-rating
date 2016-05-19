@@ -76,6 +76,24 @@
             </handler-class>
             <property name="template">/rating-view/rating-simple.xhtml</property>
         </widgetType>
+        
+        <widgetType name="rating_user_simple">
+            <configuration>
+                <title>Document User Rating Simple</title>
+                <description>
+                    <p>
+                        Document User Rating Widget - Just Stars
+                    </p>
+                </description>
+                <supportedModes>
+                    <mode>view</mode>
+                </supportedModes>
+            </configuration>
+            <handler-class>
+                org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+            </handler-class>
+            <property name="template">/rating-view/rating-user-simple.xhtml</property>
+        </widgetType>
 
     </extension>
 

@@ -1,0 +1,65 @@
+<dom-module id='nuxeo-star-rating-document-simple'>
+   <template>
+      <style>
+         .comment {
+            margin-top: 5%;
+            margin-bottom: 5%;
+         }
+      </style>
+      <nuxeo-operation id="GetRating" op="GetRating" input="{{docId}}" on-response="handleResponse"></nuxeo-operation>
+      <nuxeo-operation id="Rate" op="Rate" input="{{docId}}" params="{{params}}"></nuxeo-operation>
+      <nuxeo-star-rating rating={{vote}}></nuxeo-star-rating>
+   </template>
+   <script>
+      Polymer({
+         is: 'nuxeo-star-rating-document-simple',
+         properties: {
+            docId: {
+               type: String,
+               notify: true
+            },
+            params: {
+               type: Object,
+               notify: true
+            },
+            vote: {
+               type: Number,
+               value: 0,
+               notify: true
+            }
+         },
+
+         observers: [
+            // update the suggestion
+            'save(vote)',
+            'updateDocId(docId)'
+         ],
+
+         ready: function() {
+            console.log("-- nuxeo-star-rating-my-simple ready");
+         },
+
+         handleResponse: function(e) {
+            var myvote = e.detail.response;
+            this.vote = myvote.rating;
+         },
+
+         updateDocId: function() {
+            if (this.docId === undefined)
+               return;
+            this.docId = this.docId.replace("\/", "");
+            this.$.GetRating.execute();
+         },
+
+         save: function() {
+            this.params = {
+               rating: this.vote,
+               comment: ""
+            };
+            this.$.Rate.execute();
+         }
+
+
+      });
+   </script>
+</dom-module>
