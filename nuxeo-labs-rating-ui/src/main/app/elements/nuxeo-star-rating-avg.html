@@ -6,7 +6,7 @@
                vertical-align: middle;
             }
             </style>
-            <nuxeo-es-search id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-search>
+            <nuxeo-es-query id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-query>
             <template is="dom-if" if="{{average}}">
                <div>
                   <nuxeo-star-rating class="rowElement" rating={{average_star}} read-only="true"></nuxeo-star-rating>

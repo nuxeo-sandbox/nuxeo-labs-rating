@@ -19,7 +19,7 @@
                         width: 150px;
                   }
             </style>
-            <nuxeo-es-search id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-search>
+            <nuxeo-es-query id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-query>
             <template is="dom-if" if="{{buckets}}">
                   <table>
                         <template is="dom-repeat" items="{{buckets}}">
