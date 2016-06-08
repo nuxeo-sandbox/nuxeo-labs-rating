@@ -2,9 +2,9 @@
   "name": "nuxeo-labs-rating-ui",
   "private": true,
   "dependencies": {
-    "polymer": "Polymer/polymer#1.2.4",
-    "paper-elements": "PolymerElements/paper-elements#^1.0.5",
+    "polymer": "Polymer/polymer#^1.1.4",
     "nuxeo-elements": "nuxeo/nuxeo-elements#^0.3.0",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.5",
     "nuxeo-labs-elements": "nuxeo-sandbox/nuxeo-labs-elements#master"
   }
 }
