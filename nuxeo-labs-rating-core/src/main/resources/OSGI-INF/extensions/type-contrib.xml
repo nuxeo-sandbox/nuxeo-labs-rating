@@ -13,5 +13,9 @@
         <facet name="Rated">
             <schema name="rated"/>
         </facet>
+        <proxies>
+            <schema name="rated"/>
+        </proxies>
     </extension>
+
 </component>
