@@ -30,8 +30,8 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.impl.blob.StringBlob;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
-import org.nuxeo.labs.rating.adapter.Rating;
-import org.nuxeo.labs.rating.adapter.RatingImpl;
+import org.nuxeo.labs.rating.model.Rating;
+import org.nuxeo.labs.rating.model.RatingImpl;
 import org.nuxeo.labs.rating.operations.GetRating;
 import org.nuxeo.labs.rating.operations.Rate;
 import org.nuxeo.labs.rating.service.RatingService;
@@ -82,7 +82,7 @@ public class TestOp {
 
         DocumentModel doc = session.createDocumentModel("/", "File", "File");
         doc = session.createDocument(doc);
-        Rating rating = new RatingImpl(2, doc.getId(), doc.getTitle(), session.getPrincipal().getName(), "My comment");
+        Rating rating = new RatingImpl(2, doc.getId(), session.getPrincipal().getName(), "My comment");
         RatingService service = Framework.getService(RatingService.class);
         service.rate(session, rating);
 

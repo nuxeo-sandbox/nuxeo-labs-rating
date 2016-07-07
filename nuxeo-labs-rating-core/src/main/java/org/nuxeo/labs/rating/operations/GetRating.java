@@ -29,7 +29,7 @@ import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.Blobs;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.labs.rating.adapter.Rating;
+import org.nuxeo.labs.rating.model.Rating;
 import org.nuxeo.labs.rating.service.RatingService;
 import org.nuxeo.runtime.api.Framework;
 

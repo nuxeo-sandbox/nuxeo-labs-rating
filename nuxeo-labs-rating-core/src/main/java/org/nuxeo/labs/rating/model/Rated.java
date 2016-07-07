@@ -16,18 +16,22 @@
  * Contributors:
  *     
  */
-package org.nuxeo.labs.rating.service;
+package org.nuxeo.labs.rating.model;
 
-import org.nuxeo.ecm.core.api.CoreSession;
-import org.nuxeo.labs.rating.model.Rating;
+public interface Rated {
 
-/**
- * Created by Michaël on 1/21/2016.
- */
-public interface RatingService {
+    double getAverage();
 
-    public void rate(CoreSession session, Rating rating);
+    void setAverage(double average);
 
-    public Rating getRating(CoreSession session, String docId, String username);
+    long getCount();
+
+    void setCount(long count);
+
+    /**
+     * Copy the parameter object values in the current one
+     * @param rated
+     */
+    void copyValue(Rated rated);
 
 }
