@@ -34,7 +34,7 @@ import static org.jboss.seam.ScopeType.EVENT;
 
 @Name("ratingAction")
 @Scope(CONVERSATION)
-public class RatingBean implements Serializable{
+public class RatingActionBean implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
