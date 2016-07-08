@@ -27,12 +27,13 @@ import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.security.ACE;
 import org.nuxeo.ecm.core.api.security.impl.ACLImpl;
 import org.nuxeo.ecm.core.api.security.impl.ACPImpl;
-import org.nuxeo.labs.rating.adapter.Rating;
+import org.nuxeo.labs.rating.adapter.RatedAdapter;
+import org.nuxeo.labs.rating.adapter.RatingAdapter;
+import org.nuxeo.labs.rating.model.Rated;
+import org.nuxeo.labs.rating.model.Rating;
 import org.nuxeo.labs.rating.utils.Average;
+import org.nuxeo.labs.rating.utils.DocumentHelper;
 
-/**
- * Created by Michaël on 1/21/2016.
- */
 public class RatingServiceImpl implements RatingService {
 
     protected static final Log log = LogFactory.getLog(RatingServiceImpl.class);
@@ -52,7 +53,7 @@ public class RatingServiceImpl implements RatingService {
             // remove old value from average
             removeValueFromAverage(rating.getRating(), targetDoc);
         }
-        Rating adapter = ratingDoc.getAdapter(Rating.class);
+        Rating adapter = ratingDoc.getAdapter(RatingAdapter.class);
         adapter.copyValue(rating);
 
         // add new value to average
@@ -67,7 +68,7 @@ public class RatingServiceImpl implements RatingService {
     public Rating getRating(CoreSession session, String docId, String username) {
         DocumentModel ratingDoc = getRatingDoc(session, docId, username);
         if (ratingDoc != null) {
-            return ratingDoc.getAdapter(Rating.class);
+            return ratingDoc.getAdapter(RatingAdapter.class);
         } else {
             return null;
         }
@@ -93,9 +94,14 @@ public class RatingServiceImpl implements RatingService {
         }
     }
 
-    public DocumentModel getRatingDoc(CoreSession session, String docId, String username) {
-        String query = String.format("Select * From Rating Where rating:docId = '%s' AND " + "rating:username = '%s'",
-                docId, username);
+    protected DocumentModel getRatingDoc(CoreSession session, String docId, String username) {
+        DocumentModel doc = session.getDocument(new IdRef(docId));
+        String headDocumentId = DocumentHelper.getHeadDocumentId(doc);
+
+        String query = String.format(
+                "Select * From Rating Where (rating:docId = '%s' OR rating:headId = '%s') AND " +
+                        "rating:username = '%s'", docId, headDocumentId, username);
+
         DocumentModelList ratings = session.query(query);
         if (ratings.size() > 0) {
             return ratings.get(0);
@@ -105,22 +111,16 @@ public class RatingServiceImpl implements RatingService {
     }
 
     protected void addValueToAverage(long value, DocumentModel doc) {
-        if (!doc.hasFacet("Rated"))
-            doc.addFacet("Rated");
-        double avg = (double) doc.getPropertyValue("rated:avg");
-        long count = (long) doc.getPropertyValue("rated:count");
-        double newAvg = Average.addValueToAverage(value, avg, count);
-        doc.setPropertyValue("rated:avg", newAvg);
-        doc.setPropertyValue("rated:count", count + 1);
+        Rated ratedAdapter = doc.getAdapter(RatedAdapter.class);
+        double newAvg = Average.addValueToAverage(value, ratedAdapter.getAverage(),ratedAdapter.getCount());
+        ratedAdapter.setAverage(newAvg);
+        ratedAdapter.setCount(ratedAdapter.getCount()+1);
     }
 
     protected void removeValueFromAverage(long value, DocumentModel doc) {
-        if (!doc.hasFacet("Rated"))
-            doc.addFacet("Rated");
-        double avg = (double) doc.getPropertyValue("rated:avg");
-        long count = (long) doc.getPropertyValue("rated:count");
-        double newAvg = Average.removeValueFromAverage(value, avg, count);
-        doc.setPropertyValue("rated:avg", newAvg);
-        doc.setPropertyValue("rated:count", count - 1);
+        Rated ratedAdapter = doc.getAdapter(RatedAdapter.class);
+        double newAvg = Average.removeValueFromAverage(value, ratedAdapter.getAverage(),ratedAdapter.getCount());
+        ratedAdapter.setAverage(newAvg);
+        ratedAdapter.setCount(ratedAdapter.getCount()-1);
     }
 }

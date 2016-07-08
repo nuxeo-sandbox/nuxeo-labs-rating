@@ -31,9 +31,10 @@
     <xs:sequence> 
       <xs:element name="item" type="nxs:content" minOccurs="0" maxOccurs="unbounded"/> 
     </xs:sequence> 
-  </xs:complexType>  
+  </xs:complexType>
+  <xs:element name="headId" type="xs:string"/>
+  <xs:element name="versionId" type="xs:string"/>
   <xs:element name="docId" type="xs:string"/>
-  <xs:element name="docTitle" type="xs:string"/>
   <xs:element name="rating" type="xs:integer"/>
   <xs:element name="username" type="xs:string"/>
   <xs:element name="comment" type="xs:string"/>

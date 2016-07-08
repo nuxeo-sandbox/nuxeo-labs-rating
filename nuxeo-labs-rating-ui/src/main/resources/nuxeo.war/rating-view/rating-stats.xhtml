@@ -17,7 +17,7 @@
 
   <template is="dom-bind">
     <nuxeo-connection id="nx_connection" url="#{baseURL}"></nuxeo-connection>
-    <nuxeo-star-rating-stats doc-id="#{currentDocument.id}"></nuxeo-star-rating-stats>
+    <nuxeo-star-rating-stats doc-id="#{ratingAction.getHeadDocumentId()}"></nuxeo-star-rating-stats>
   </template>
 
 </h:panelGroup>

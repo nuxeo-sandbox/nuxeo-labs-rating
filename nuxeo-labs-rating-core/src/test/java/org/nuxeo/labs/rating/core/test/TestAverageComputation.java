@@ -25,7 +25,7 @@ import org.nuxeo.labs.rating.utils.Average;
 /**
  * Created by Michaël on 30/05/2015.
  */
-public class TestAverageComputation {
+public class    TestAverageComputation {
 
     @Test
     public void testAddToEmptyAvg() {

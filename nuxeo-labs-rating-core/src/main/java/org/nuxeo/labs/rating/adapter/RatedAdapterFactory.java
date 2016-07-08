@@ -18,31 +18,14 @@
  */
 package org.nuxeo.labs.rating.adapter;
 
-/**
- * Created by Michaël on 1/21/2016.
- */
-public interface Rating {
+import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.adapter.DocumentAdapterFactory;
 
-    void setRating(long rating);
+public class RatedAdapterFactory implements DocumentAdapterFactory {
 
-    long getRating();
-
-    String getUsername();
-
-    void setUsername(String username);
-
-    String getDocId();
-
-    void setDocId(String docId);
-
-    String getDocTitle();
-
-    void setDocTitle(String docTitle);
-
-    String getComment();
-
-    void setComment(String comment);
-
-    void copyValue(Rating rating);
+    @Override
+    public Object getAdapter(DocumentModel doc, Class<?> itf) {
+        return new RatedAdapter(doc);
+    }
 
 }

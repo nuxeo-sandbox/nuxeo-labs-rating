@@ -2,8 +2,10 @@
 <component name="org.nuxeo.labs.rating.adapters">
 
     <extension point="adapters" target="org.nuxeo.ecm.core.api.DocumentAdapterService">
-        <adapter class="org.nuxeo.labs.rating.adapter.Rating"
+        <adapter class="org.nuxeo.labs.rating.adapter.RatingAdapter"
                  factory="org.nuxeo.labs.rating.adapter.RatingAdapterFactory"/>
+        <adapter class="org.nuxeo.labs.rating.adapter.RatedAdapter"
+                 factory="org.nuxeo.labs.rating.adapter.RatedAdapterFactory"/>
     </extension>
 
 </component>

@@ -11,10 +11,11 @@
                     <predicate parameter="rating:rating" operator="=">
                         <field schema="ratings_cv" name="rating_rating"/>
                     </predicate>
-                    <fixedPart>ecm:mixinType != 'HiddenInNavigation' AND ecm:isCheckedInVersion = 0 AND ecm:currentLifeCycleState != 'deleted' AND ecm:primaryType = 'Rating' AND rating:docId = ?</fixedPart>
+                    <fixedPart>ecm:mixinType != 'HiddenInNavigation' AND ecm:isCheckedInVersion = 0 AND ecm:currentLifeCycleState != 'deleted' AND ecm:primaryType = 'Rating' AND (rating:docId = ? OR rating:headId = ?)</fixedPart>
                 </whereClause>
                 <searchDocumentType>ratings_cv</searchDocumentType>
                 <parameter>#{currentDocument.id}</parameter>
+                <parameter>#{ratingAction.getHeadDocumentId()}</parameter>
                 <sort column="dc:title" ascending="true"/>
                 <pageSize>10</pageSize>
             </genericPageProvider>
