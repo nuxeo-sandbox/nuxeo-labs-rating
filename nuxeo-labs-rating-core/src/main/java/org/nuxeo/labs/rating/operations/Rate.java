@@ -32,9 +32,7 @@ import org.nuxeo.labs.rating.model.RatingImpl;
 import org.nuxeo.labs.rating.service.RatingService;
 import org.nuxeo.runtime.api.Framework;
 
-/**
- * @author Michaël Vachette
- */
+
 @Operation(id = Rate.ID, category = Constants.CAT_DOCUMENT, label = "Rate", description = "")
 public class Rate {
 

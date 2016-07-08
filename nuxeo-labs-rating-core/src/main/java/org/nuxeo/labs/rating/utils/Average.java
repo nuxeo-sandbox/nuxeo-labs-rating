@@ -18,9 +18,7 @@
  */
 package org.nuxeo.labs.rating.utils;
 
-/**
- * Created by Michaël on 2/24/2016.
- */
+
 public class Average {
 
     public static double addValueToAverage(long value, double average, long count) {

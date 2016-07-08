@@ -18,9 +18,6 @@
  */
 package org.nuxeo.labs.rating.model;
 
-/**
- * Created by Michaël on 1/21/2016.
- */
 public class RatingImpl implements Rating {
 
     protected long rating;

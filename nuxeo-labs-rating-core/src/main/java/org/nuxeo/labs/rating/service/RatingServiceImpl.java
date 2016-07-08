@@ -34,9 +34,6 @@ import org.nuxeo.labs.rating.model.Rating;
 import org.nuxeo.labs.rating.utils.Average;
 import org.nuxeo.labs.rating.utils.DocumentHelper;
 
-/**
- * Created by Michaël on 1/21/2016.
- */
 public class RatingServiceImpl implements RatingService {
 
     protected static final Log log = LogFactory.getLog(RatingServiceImpl.class);
