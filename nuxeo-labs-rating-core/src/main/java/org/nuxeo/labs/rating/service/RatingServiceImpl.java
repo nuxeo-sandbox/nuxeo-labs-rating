@@ -32,6 +32,7 @@ import org.nuxeo.labs.rating.adapter.RatingAdapter;
 import org.nuxeo.labs.rating.model.Rated;
 import org.nuxeo.labs.rating.model.Rating;
 import org.nuxeo.labs.rating.utils.Average;
+import org.nuxeo.labs.rating.utils.DocumentHelper;
 
 /**
  * Created by Michaël on 1/21/2016.
@@ -96,21 +97,9 @@ public class RatingServiceImpl implements RatingService {
         }
     }
 
-    public DocumentModel getRatingDoc(CoreSession session, String docId, String username) {
+    protected DocumentModel getRatingDoc(CoreSession session, String docId, String username) {
         DocumentModel doc = session.getDocument(new IdRef(docId));
-        String headDocumentId = null;
-        if (doc.isProxy()) {
-            DocumentModel targetDoc = session.getSourceDocument(doc.getRef());
-            if (targetDoc.isVersion()) {
-                headDocumentId = targetDoc.getSourceId();
-            } else {
-                headDocumentId = targetDoc.getId();
-            }
-        } else if (doc.isVersion()) {
-            headDocumentId = doc.getSourceId();
-        } else {
-            headDocumentId = doc.getId();
-        }
+        String headDocumentId = DocumentHelper.getHeadDocumentId(doc);
 
         String query = String.format(
                 "Select * From Rating Where (rating:docId = '%s' OR rating:headId = '%s') AND " +
