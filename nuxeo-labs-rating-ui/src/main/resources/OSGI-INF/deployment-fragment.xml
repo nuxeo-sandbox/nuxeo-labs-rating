@@ -8,13 +8,4 @@
     </unzip>
   </install>
 
-  <extension target="web#STD-AUTH-FILTER">
-    <filter-mapping>
-      <filter-name>NuxeoAuthenticationFilter</filter-name>
-      <url-pattern>/rating/*</url-pattern>
-      <dispatcher>REQUEST</dispatcher>
-      <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
-  </extension>
-
 </fragment>

@@ -4,14 +4,10 @@
               xmlns:nxr="http://nuxeo.org/nxweb/resources"
               styleClass="nx-elements">
 
-  <h:outputScript src="/bower_components/webcomponentsjs/webcomponents-lite.js" target="#{pageJsTarget}" />
-  <h:outputScript src="/bower_components/moment/min/moment-with-locales.min.js" target="#{pageJsTarget}" />
-  <h:outputScript target="#{pageJsTarget}">
-    var lang = navigator.language || navigator.browserLanguage;
-    moment.locale(lang);
-  </h:outputScript>
+  <h:outputScript src="/ui/webcomponentsjs/webcomponents.min.js" target="#{pageJsTarget}" />
 
-  <nxr:import src="/rating/elements/elements.vulcanized.html" target="#{pageJsTarget}" />
+  <nxr:import src="/ui/elements.html" target="#{pageJsTarget}" />
+  <nxr:import src="/ui/rating/nuxeo-star-rating-stats.html" target="#{pageJsTarget}" />
 
   <div class="widgetLabel summaryTitle">Rating</div>
 

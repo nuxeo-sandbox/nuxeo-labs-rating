@@ -5,7 +5,7 @@
                         width: 18px;
                         height: 17px;
                         margin-right: 5px;
-                        background: url(../images/rating.png) no-repeat;
+                        background: url(rating.png) no-repeat;
                   }
 
                   td {
@@ -19,7 +19,7 @@
                         width: 150px;
                   }
             </style>
-            <nuxeo-es-query id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-query>
+            <nuxeo-es-search id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-search>
             <template is="dom-if" if="{{buckets}}">
                   <table>
                         <template is="dom-repeat" items="{{buckets}}">
