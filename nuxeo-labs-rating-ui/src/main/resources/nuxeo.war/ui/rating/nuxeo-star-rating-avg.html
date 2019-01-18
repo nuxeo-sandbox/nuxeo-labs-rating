@@ -1,108 +1,118 @@
 <link rel="import" href="nuxeo-star-rating.html">
 
 <dom-module id='nuxeo-star-rating-avg'>
-      <template>
-            <style>
-            .rowElement {
-               display: inline-flex;
-               vertical-align: middle;
+    <template>
+        <style include="iron-flex iron-flex-alignment">
+            .avg {
+                margin-left:8px;
             }
-            </style>
-            <nuxeo-es-search id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-search>
-            <template is="dom-if" if="{{average}}">
-               <div>
-                  <nuxeo-star-rating class="rowElement" rating={{average_star}} read-only="true"></nuxeo-star-rating>
-                  <div class="rowElement">[[doc_count]]</div>
-               </div>
-            </template>
-      </template>
-      <script>
-            Polymer({
-                  is: 'nuxeo-star-rating-avg',
-                  // Expose properties
-                  properties: {
-                        docId: {
-                              type: String,
-                              notify: true
-                        },
-                        query: {
-                              type: Object,
-                              notify: true
-                        },
-                        aggregates: {
-                              type: Object,
-                              notify: true
-                        },
-                        aggregations: {
-                              type: Object,
-                              notify: true
-                        },
-                        average: {
-                              type: Number,
-                              notify: true
-                        },
-                        average_star: {
-                              type: Number,
-                              notify: true
-                        },
-                        doc_count: {
-                           type: Number,
-                           notify: true
-                        }
-                  },
 
-                  observers: [
-                        // update the suggestion
-                        'updateDocId(docId)',
-                        'updateAverage(aggregations)'
-                  ],
+        </style>
 
-                  ready: function() {
-                   console.log("-- nuxeo-star-rating-avg ready");
-                  },
+        <nuxeo-es-search auto id="ratingProvider" query="[[query]]" aggregates="[[aggregates]]"
+                         aggregations="{{aggregations}}"></nuxeo-es-search>
 
-                  updateDocId: function() {
-                        if (this.docId === undefined)
-                              return;
-                        this.docId = this.docId.replace("\/", "");
-                        this.query = {
-                              bool: {
-                                    must: [
-                                          {
-                                                constant_score: {
-                                                      filter: {
-                                                            term: {
-                                                                  "rating:headId": this.docId
-                                                            }
-                                                      }
-                                                }
-                                          }
-                                    ]
-                              }
-                        },
-                        this.aggregates = {
-                              doc_rating_agg_filter: {
+        <template is="dom-if" if="[[_display(average)]]">
+            <div class="layout horizontal">
+                <nuxeo-star-rating rating="[[average_star]]" read-only="true"></nuxeo-star-rating>
+                <div class="avg">([[doc_count]])</div>
+            </div>
+        </template>
+
+    </template>
+    <script>
+        Polymer({
+            is: 'nuxeo-star-rating-avg',
+            // Expose properties
+            properties: {
+                docId: {
+                    type: String,
+                    notify: true
+                },
+                query: {
+                    type: Object,
+                    notify: true
+                },
+                aggregates: {
+                    type: Object,
+                    notify: true
+                },
+                aggregations: {
+                    type: Object,
+                    notify: true
+                },
+                average: {
+                    type: Number,
+                    notify: true
+                },
+                average_star: {
+                    type: Number,
+                    notify: true
+                },
+                doc_count: {
+                    type: Number,
+                    notify: true
+                }
+            },
+
+            observers: [
+                // update the suggestion
+                'updateDocId(docId)',
+                'updateAverage(aggregations)'
+            ],
+
+            _display: function(average) {
+                return average!== undefined && average !== null;
+            },
+
+            updateDocId: function() {
+                if (this.docId === undefined)
+                    return;
+                this.docId = this.docId.replace("\/", "");
+                this.query = {
+                    bool: {
+                        must: [
+                            {
+                                constant_score: {
                                     filter: {
-                                          match_all: {}
-                                    },
-                                    aggregations: {
-                                          doc_rating_avg_agg: {
-                                             avg : {
-                                                field : "rating:rating",
-                                             }
-                                          }
+                                        term: {
+                                            "rating:headId": this.docId
+                                        }
                                     }
-                              }
-                        };
-                        this.$.ratingProvider.execute();
-                  },
+                                }
+                            }
+                        ]
+                    }
+                },
+                    this.aggregates = {
+                        doc_rating_agg_filter: {
+                            filter: {
+                                match_all: {}
+                            },
+                            aggregations: {
+                                doc_rating_avg_agg: {
+                                    avg : {
+                                        field : "rating:rating",
+                                    }
+                                }
+                            }
+                        }
+                    };
+                //this.$.ratingProvider.execute();
+            },
 
-                  updateAverage: function() {
-                     this.doc_count = this.aggregations.doc_rating_agg_filter.doc_count;
-                     this.average = this.aggregations.doc_rating_agg_filter.doc_rating_avg_agg.value;
-                     this.average_star = Math.round(this.average);
-                  }
-            });
-      </script>
+            updateAverage: function() {
+                this.doc_count = this.aggregations.doc_rating_agg_filter.doc_count;
+                if (this.doc_count >0) {
+                    this.average = this.aggregations.doc_rating_agg_filter.doc_rating_avg_agg.value;
+                    this.average_star = Math.round(this.average);
+                } else {
+                    this.average = 0;
+                    this.average_star = 0;
+                }
+
+            }
+        });
+    </script>
 
 </dom-module>

@@ -29,25 +29,25 @@
       <div class="main">
          <div class="container">
             <div class="average">
-               <nuxeo-star-rating-avg doc-id=[[docId]]></nuxeo-star-rating-avg>
+               <nuxeo-star-rating-avg doc-id="[[docId]]"></nuxeo-star-rating-avg>
             </div>
-            <nuxeo-star-rating-distribution doc-id=[[docId]]></nuxeo-star-rating-distribution>
+            <nuxeo-star-rating-distribution doc-id="[[docId]]"></nuxeo-star-rating-distribution>
          </div>
       </div>
    </template>
    <script>
-      Polymer({
-         is: 'nuxeo-star-rating-stats',
-         properties: {
-            docId: {
-               type: String,
-               notify: true
-            }
-         },
+       Polymer({
+           is: 'nuxeo-star-rating-stats',
+           properties: {
+               docId: {
+                   type: String,
+                   notify: true
+               }
+           },
 
-         ready: function() {
-            console.log("-- nuxeo-document-rating ready");
-         }
-      });
+           ready: function() {
+               console.log("-- nuxeo-document-rating ready");
+           }
+       });
    </script>
 </dom-module>

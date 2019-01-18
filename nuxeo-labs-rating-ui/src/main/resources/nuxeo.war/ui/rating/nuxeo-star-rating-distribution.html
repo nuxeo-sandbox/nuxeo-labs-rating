@@ -9,8 +9,8 @@
                   }
 
                   td {
-                     padding: 2px;
-                     vertical-align: middle;
+                        padding: 2px;
+                        vertical-align: middle;
                   }
 
                   paper-progress {
@@ -19,142 +19,148 @@
                         width: 150px;
                   }
             </style>
-            <nuxeo-es-search id='ratingProvider' query=[[query]] aggregates=[[aggregates]] aggregations={{aggregations}}></nuxeo-es-search>
-            <template is="dom-if" if="{{buckets}}">
-                  <table>
-                        <template is="dom-repeat" items="{{buckets}}">
-                              <tr>
-                                    <td>
-                                          <div>[[item.from]] star</div>
-                                    </td>
-                                    <td>
-                                          <div></div>
-                                    </td>
-                                    <td>
-                                          <paper-progress class="bar" value="[[item.doc_count]]"></paper-progress>
-                                    </td>
-                                    <td>
-                                          <span>[[item.doc_count]]%</span>
-                                    </td>
-                              </tr>
-                        </template>
-                  </table>
-            </template>
+
+            <nuxeo-es-search auto id="ratingProvider" query="[[query]]" aggregates="[[aggregates]]"
+                             aggregations="{{aggregations}}"></nuxeo-es-search>
+
+
+            <table>
+                  <template is="dom-repeat" items="[[buckets]]">
+                        <tr>
+                              <td>
+                                    <div>[[item.from]] star</div>
+                              </td>
+                              <td>
+                                    <div></div>
+                              </td>
+                              <td>
+                                    <paper-progress class="bar" value="[[item.doc_count]]"></paper-progress>
+                              </td>
+                              <td>
+                                    <span>[[item.doc_count]]%</span>
+                              </td>
+                        </tr>
+                  </template>
+            </table>
+
       </template>
       <script>
-            Polymer({
-                  is: 'nuxeo-star-rating-distribution',
-                  // Expose properties
-                  properties: {
-                        docId: {
-                              type: String,
-                              notify: true
-                        },
-                        query: {
-                              type: Object,
-                              notify: true
-                        },
-                        aggregates: {
-                              type: Object,
-                              notify: true
-                        },
-                        aggregations: {
-                              type: Object,
-                              notify: true
-                        },
-                        buckets: {
-                              type: Object,
-                              notify: true,
-                              value: function() {
-                                    return [];
-                              }
-                        }
+          Polymer({
+              is: 'nuxeo-star-rating-distribution',
+              // Expose properties
+              properties: {
+                  docId: {
+                      type: String,
+                      notify: true
                   },
-
-                  observers: [
-                        // update the suggestion
-                        'updateDocId(docId)',
-                        'updateBucket(aggregations)'
-                  ],
-
-                  ready: function() {
-                   console.log("-- nuxeo-rating-stats ready");
+                  query: {
+                      type: Object,
+                      notify: true
                   },
-
-                  updateDocId: function() {
-                        if (this.docId === undefined)
-                              return;
-                        this.docId = this.docId.replace("\/", "");
-
-                        this.query = {
-                              bool: {
-                                    must: [
-                                          {
-                                                constant_score: {
-                                                      filter: {
-                                                            term: {
-                                                                  "rating:headId": this.docId
-                                                            }
-                                                      }
-                                                }
-                                          }
-                                    ]
-                              }
-                        },
-                        this.aggregates = {
-                              document_vote_agg_filter: {
-                                    filter: {
-                                          match_all: {}
-                                    },
-                                    aggregations: {
-                                          document_vote_agg: {
-                                                range: {
-                                                      field: "rating:rating",
-                                                      ranges: [
-                                                            {
-                                                                  "key": 5,
-                                                                  "from": 5
-                                                            }, {
-                                                                  "key": 4,
-                                                                  "from": 4,
-                                                                  "to": 5
-                                                            }, {
-                                                                  "key": 3,
-                                                                  "from": 3,
-                                                                  "to": 4
-                                                            }, {
-                                                                  "key": 2,
-                                                                  "from": 2,
-                                                                  "to": 3
-                                                            }, {
-                                                                  "key": 1,
-                                                                  "from": 1,
-                                                                  "to": 2
-                                                            }
-                                                      ]
-                                                }
-                                          }
-                                    }
-                              }
-                        };
-                        this.$.ratingProvider.execute();
+                  aggregates: {
+                      type: Object,
+                      notify: true
                   },
-
-                  updateBucket: function() {
-                        var tmpbuckets = this.aggregations.document_vote_agg_filter.document_vote_agg.buckets;
-                        var total = this.aggregations.document_vote_agg_filter.doc_count;
-                        tmpbuckets.reverse();
-                        if (this.buckets.length === 5)
-                              this.splice('buckets', 0, 5);
-                        for (var i = 0; i < tmpbuckets.length; i++) {
-                             if (total != 0) {
-                                 tmpbuckets[i].doc_count = Math.round((tmpbuckets[i].doc_count / total)*100);
-                             }
-                             this.push('buckets', tmpbuckets[i]);
-                        }
-                        this.set('buckets', this.buckets);
+                  aggregations: {
+                      type: Object,
+                      notify: true
+                  },
+                  buckets: {
+                      type: Object,
+                      notify: true,
+                      value: function() {
+                          return [];
+                      }
                   }
-            });
+              },
+
+              observers: [
+                  // update the suggestion
+                  'updateDocId(docId)',
+                  'updateBucket(aggregations)'
+              ],
+
+              ready: function() {
+                  console.log("-- nuxeo-rating-stats ready");
+              },
+
+              updateDocId: function() {
+                  if (this.docId === undefined)
+                      return;
+                  this.docId = this.docId.replace("\/", "");
+
+                  this.query = {
+                      bool: {
+                          must: [
+                              {
+                                  constant_score: {
+                                      filter: {
+                                          term: {
+                                              "rating:headId": this.docId
+                                          }
+                                      }
+                                  }
+                              }
+                          ]
+                      }
+                  },
+                      this.aggregates = {
+                          document_vote_agg_filter: {
+                              filter: {
+                                  match_all: {}
+                              },
+                              aggregations: {
+                                  document_vote_agg: {
+                                      range: {
+                                          field: "rating:rating",
+                                          keyed : true,
+                                          ranges: [
+                                              {
+                                                  "key": "5",
+                                                  "from": 5
+                                              }, {
+                                                  "key": "4",
+                                                  "from": 4,
+                                                  "to": 5
+                                              }, {
+                                                  "key": "3",
+                                                  "from": 3,
+                                                  "to": 4
+                                              }, {
+                                                  "key": "2",
+                                                  "from": 2,
+                                                  "to": 3
+                                              }, {
+                                                  "key": "1",
+                                                  "from": 1,
+                                                  "to": 2
+                                              }
+                                          ]
+                                      }
+                                  }
+                              }
+                          }
+                      };
+                  //this.$.ratingProvider.execute();
+              },
+
+              updateBucket: function() {
+                  var tmpbuckets = this.aggregations.document_vote_agg_filter.document_vote_agg.buckets;
+                  var total = this.aggregations.document_vote_agg_filter.doc_count;
+                  //tmpbuckets.reverse();
+
+                  if (this.buckets.length > 0) {
+                      this.splice('buckets', 0, this.buckets.length);
+                  }
+                  for (var i = 5; i >= 0; i--) {
+                      var bucket = tmpbuckets[""+i];
+                      if (total != 0) {
+                          bucket.doc_count = Math.round((bucket.doc_count / total)*100);
+                      }
+                      this.push('buckets',bucket);
+                  }
+              }
+          });
       </script>
 
 </dom-module>
