@@ -1,11 +1,6 @@
-nifest-Version: 1.0
+Manifest-Version: 1.0
 Bundle-Vendor: Nuxeo
-Nuxeo-RequiredBy: org.nuxeo.ecm.war
 Bundle-Version: 0.0.1
 Bundle-Name: Nuxeo Labs Rating UI
 Bundle-ManifestVersion: 1
 Bundle-SymbolicName: nuxeo-labs-rating-ui;singleton:=true
-Nuxeo-Component: OSGI-INF/extensions/widget-types-contrib.xml,
-    OSGI-INF/extensions/widget-contrib.xml,
-    OSGI-INF/extensions/action-contrib.xml,
-    OSGI-INF/extensions/content-view-contrib.xml
