@@ -32,10 +32,6 @@
     <copy todir="${outdir}">
       <artifact:file key="org.nuxeo.ecm.distribution:nuxeo-nxr-server::zip" />
     </copy>
-    <!-- JSF UI NXR -->
-    <copy todir="${outdir}">
-      <artifact:file key="org.nuxeo.ecm.distribution:nuxeo-nxr-jsf-ui::zip" />
-    </copy>
 
     <!-- Nuxeo bundles -->
     <copy todir="${outdir}/nxr/bundles" overwrite="true">
@@ -63,8 +59,6 @@
     <nx:rmdups dir="${outdir}/nxr/lib" />
 
     <unzip src="${outdir}/nuxeo-nxr-server-${nuxeo.distribution.version}.zip"
-           dest="${outdir}/nuxeo-nxr-all" />
-    <unzip src="${outdir}/nuxeo-nxr-jsf-ui-${nuxeo.distribution.version}.zip"
            dest="${outdir}/nuxeo-nxr-all" />
     <zip destfile="${outdir}/nuxeo-nxr-all-${nuxeo.distribution.version}.zip"
          basedir="${outdir}/nuxeo-nxr-all" />
