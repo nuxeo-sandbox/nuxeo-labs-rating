@@ -1,6 +1,8 @@
 <package type="addon" name="nuxeo-labs-rating" version="@VERSION@">
   <title>Nuxeo Document Rating</title>
-  <p>This plugin enables users to rate documents in the Nuxeo Platform</p>
+  <description>
+    <p>This plugin enables users to rate documents in the Nuxeo Platform</p>
+  </description>
   <home-page>https://github.com/nuxeo-sandbox/nuxeo-labs-rating</home-page>
   <vendor>Nuxeo</vendor>
   <installer restart="true" />
