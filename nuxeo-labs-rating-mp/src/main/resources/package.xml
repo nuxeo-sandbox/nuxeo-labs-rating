@@ -1,8 +1,7 @@
-<!-- See documentation at http://doc.nuxeo.com/x/HgIz -->
 <package type="addon" name="nuxeo-labs-rating" version="@VERSION@">
-  <title>Nuxeo Labs Rating MP</title>
-  <description></description>
-  <home-page>http://doc.nuxeo.com/</home-page>
+  <title>Nuxeo Document Rating</title>
+  <p>This plugin enables users to rate documents in the Nuxeo Platform</p>
+  <home-page>https://github.com/nuxeo-sandbox/nuxeo-labs-rating</home-page>
   <vendor>Nuxeo</vendor>
   <installer restart="true" />
   <uninstaller restart="true" />
@@ -22,7 +21,6 @@
   </platforms>
   <!-- Dependencies on other packages -->
   <dependencies>
-    <package>nuxeo-jsf-ui</package>
     <package>nuxeo-web-ui</package>
   </dependencies>
   <!-- Conflicts with other packages -->
@@ -33,7 +31,8 @@
   <!-- <provides> -->
   <!-- <package>an-embedded-package:1.0.0:1.0.0</package> -->
   <!-- </provides> -->
-  <license>LGPL 2.1</license>
-  <license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+  <license>Apache License, Version 2.0</license>
+  <license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+  <!-- Visibility: PRIVATE | MARKETPLACE | DEV | PUBLIC -->
   <visibility>PUBLIC</visibility>
 </package>
