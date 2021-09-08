@@ -1,0 +1,63 @@
+<link rel="import" href="../widgets/nuxeo-star-rating-list.html">
+<link rel="import" href="../widgets/nuxeo-star-rating-document.html">
+<link rel="import" href="../widgets/nuxeo-star-rating-stats.html">
+
+<!--
+`nuxeo-document-ratings`
+@group Nuxeo UI
+@element nuxeo-document-ratings
+-->
+<dom-module id="nuxeo-document-ratings">
+    <template>
+        <style include="nuxeo-styles iron-flex iron-flex-alignment">
+            .page,
+            .content {
+                @apply --layout-vertical;
+            }
+
+            .middle {
+                padding-left:32px;
+            }
+
+            nuxeo-star-rating-document {
+                min-width:320px;
+                display: block;
+            }
+
+        </style>
+
+        <div class="page">
+            <div class="content">
+                <div class="layout horizontal wrap">
+                    <div class="layout vertical">
+                        <nuxeo-card heading="[[i18n('label.rating.my')]]">
+                            <nuxeo-star-rating-document doc-id="[[document.uid]]"></nuxeo-star-rating-document>
+                        </nuxeo-card>
+                        <nuxeo-card heading="[[i18n('label.rating.stats')]]">
+                            <nuxeo-star-rating-stats doc-id="[[document.uid]]"></nuxeo-star-rating-stats>
+                        </nuxeo-card>
+                    </div>
+                    <div class="middle"></div>
+                    <div class="flex">
+                        <nuxeo-card heading="[[i18n('label.rating.all')]]">
+                            <nuxeo-star-rating-list document="[[document]]"></nuxeo-star-rating-list>
+                        </nuxeo-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'nuxeo-document-ratings',
+            behaviors: [Nuxeo.LayoutBehavior],
+            properties: {
+                document: {
+                    type: Object
+                }
+            }
+        });
+    </script>
+</dom-module>

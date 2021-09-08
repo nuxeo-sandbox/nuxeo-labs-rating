@@ -4,3 +4,4 @@ Bundle-Version: 0.0.1
 Bundle-Name: Nuxeo Labs Rating UI
 Bundle-ManifestVersion: 1
 Bundle-SymbolicName: nuxeo-labs-rating-ui;singleton:=true
+Nuxeo-Component: OSGI-INF/webresources-contrib.xml

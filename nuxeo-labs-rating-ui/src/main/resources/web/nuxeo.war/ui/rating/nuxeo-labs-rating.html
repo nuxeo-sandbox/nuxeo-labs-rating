@@ -1,0 +1,17 @@
+<link rel="import" href="tab/nuxeo-document-ratings.html">
+
+<nuxeo-slot-content name="ratingsDocumentTab" slot="DOCUMENT_VIEWS_ITEMS" order="60">
+    <template>
+        <nuxeo-filter document="[[document]]">
+            <template>
+                <nuxeo-page-item name="nuxeo-document-ratings" label="label.rating.tab"></nuxeo-page-item>
+            </template>
+        </nuxeo-filter>
+    </template>
+</nuxeo-slot-content>
+
+<nuxeo-slot-content name="ratingsDocumentTab" slot="DOCUMENT_VIEWS_PAGES">
+    <template>
+        <nuxeo-document-ratings document="[[document]]" name="nuxeo-document-ratings"></nuxeo-document-ratings>
+    </template>
+</nuxeo-slot-content>

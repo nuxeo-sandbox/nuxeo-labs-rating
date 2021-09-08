@@ -1,3 +1,4 @@
+<!-- See documentation at http://doc.nuxeo.com/x/HgIz -->
 <package type="addon" name="nuxeo-labs-rating" version="@VERSION@">
   <title>Nuxeo Document Rating</title>
   <description>
@@ -9,20 +10,19 @@
   <uninstaller restart="true" />
   <!-- <hotreload-support>false</hotreload-support> -->
   <!-- <require-terms-and-conditions-acceptance>false</require-terms-and-conditions-acceptance> -->
+  <!-- Nuxeo Validation: none | inprocess | primary_validation | nuxeo_certified -->
   <nuxeo-validation>none</nuxeo-validation>
-  <!-- <nuxeo-validation>inprocess</nuxeo-validation> -->
-  <!-- <nuxeo-validation>primary_validation</nuxeo-validation> -->
-  <!-- <nuxeo-validation>nuxeo_certified</nuxeo-validation> -->
-  <!-- <production-state>proto</production-state> -->
+  <!-- Production State: production_ready | testing | proto -->
   <production-state>testing</production-state>
-  <!-- <production-state>production_ready</production-state> -->
   <supported>false</supported>
   <platforms>
-    <platform>cap-@DISTRIB_VERSION@</platform>
-    <platform>cap-@DISTRIB_VERSION@-HF*</platform>
+    <platform>lts-@NUXEO_TARGET_VERSION@</platform>
   </platforms>
-  <!-- Dependencies on other packages -->
   <dependencies>
+    <!-- <package>another-package:1.0.0:1.0.0</package> -->
+    <!-- If you require JSF UI package:  -->
+    <!-- <package>nuxeo-jsf-ui</package> -->
+    <!-- If you require WEB UI package:  -->
     <package>nuxeo-web-ui</package>
   </dependencies>
   <!-- Conflicts with other packages -->

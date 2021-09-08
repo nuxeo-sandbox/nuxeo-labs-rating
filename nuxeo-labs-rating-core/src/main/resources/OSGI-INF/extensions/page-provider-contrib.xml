@@ -1,0 +1,15 @@
+<component name="org.nuxeo.labs.ratings.core.pp">
+    <extension point="providers" target="org.nuxeo.ecm.platform.query.api.PageProviderService">
+        <coreQueryPageProvider name="document-ratings">
+            <trackUsage>false</trackUsage>
+            <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
+            <whereClause>
+                <fixedPart>
+                    rating:docId = :docId
+                </fixedPart>
+            </whereClause>
+            <sort ascending="false" column="dc:modified"/>
+            <pageSize>40</pageSize>
+        </coreQueryPageProvider>
+    </extension>
+</component>

@@ -1,0 +1,11 @@
+{
+  "generator-nuxeo": {
+    "lastRemote": "C:\\Users\\michael\\.cache\\node-yeoman-remote-cache\\nuxeo\\generator-nuxeo-meta\\3.0.0",
+    "promptValues": {
+      "parent_package": "org.nuxeo.labs.rating",
+      "parent_artifact": "nuxeo-labs-rating-parent",
+      "parent_version": "2021.0.0-SNAPSHOT"
+    },
+    "_nuxeo_version": "2021.0.0-SNAPSHOT"
+  }
+}

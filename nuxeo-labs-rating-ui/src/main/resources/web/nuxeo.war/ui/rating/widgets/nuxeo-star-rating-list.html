@@ -1,0 +1,117 @@
+<link rel="import" href="nuxeo-star-rating.html">
+
+<dom-module id="nuxeo-star-rating-list">
+    <template>
+
+        <style include="nuxeo-styles">
+
+            :host {
+                display: block;
+            }
+
+            *[role=widget] {
+                padding: 5px;
+            }
+
+            nuxeo-results {
+                --nuxeo-document-content-min-height: calc(100vh - 256px - var(--nuxeo-app-top));
+            }
+
+            .results {
+                @apply --layout-vertical;
+                @apply --layout-flex;
+                min-height: var(--nuxeo-document-content-min-height, calc(100vh - 216px - var(--nuxeo-app-top)));
+                margin-bottom: var(--nuxeo-document-content-margin-bottom, 0);
+            }
+
+        </style>
+
+        <nuxeo-page-provider id="nxProvider"
+                             provider="[[providerName]]"
+                             page-size="40"
+                             aggregations="{{aggregations}}"
+                             params="[[params]]"
+                             schemas="dublincore,rating"
+                             headers="[[headers]]"
+                             fetch-aggregates>
+        </nuxeo-page-provider>
+
+
+        <nuxeo-results id="results" name="[[resultconfigname]]" nx-provider="[[nxProvider]]" selected-items="{{selectedItems}}">
+            <nuxeo-data-table name="table" icon="nuxeo:view-list"
+                              class="results"
+                              settings-enabled
+                              draggable$="false">
+
+                <nuxeo-data-table-column name="[[i18n('documentContentView.datatable.header.author')]]"
+                                         field="dc:creator" sort-by="[[_displaySort(document, 'dc:creator')]]">
+                    <template>
+                        <nuxeo-user-tag user="[[item.properties.dc:creator]]"></nuxeo-user-tag>
+                    </template>
+                </nuxeo-data-table-column>
+
+                <nuxeo-data-table-column name="[[i18n('documentContentView.datatable.header.rating')]]" field="rating:rating"
+                                         sort-by="[[_displaySort(document, 'rating:rating')]]">
+                    <template>
+                        <nuxeo-tag>[[item.properties.rating:rating]]</nuxeo-tag>
+                    </template>
+                </nuxeo-data-table-column>
+
+                <nuxeo-data-table-column name="[[i18n('documentContentView.datatable.header.comment')]]" field="rating:comment">
+                    <template>
+                        <div>[[item.properties.rating:comment]]</div>
+                    </template>
+                </nuxeo-data-table-column>
+
+                <nuxeo-data-table-column name="[[i18n('documentContentView.datatable.header.modified')]]"
+                                         field="dc:modified" sort-by="[[_displaySort(document, 'dc:modified')]]">
+                    <template>
+                        <nuxeo-date datetime="[[item.properties.dc:modified]]"></nuxeo-date>
+                    </template>
+                </nuxeo-data-table-column>
+
+            </nuxeo-data-table>
+        </nuxeo-results>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'nuxeo-star-rating-list',
+            behaviors: [Nuxeo.LayoutBehavior, Nuxeo.DocumentContentBehavior],
+            properties: {
+                document: {
+                    type: Object
+                },
+                searchProperty: {
+                    type: String,
+                    value: 'docId'
+                },
+                providerName: {
+                    type: String,
+                    value: 'document-ratings'
+                }
+            },
+
+            _computeSortOptions() {
+                return [
+                    {field: 'dc:title', label: this.i18n('searchResults.sort.field.title'), order: 'asc'},
+                    {field: 'dc:modified', label: this.i18n('searchResults.sort.field.modified'), order: 'desc'},
+                    {field: 'state', label: this.i18n('searchResults.sort.field.state'), order: 'asc'}
+                ];
+            },
+
+            _computeParams: function(document) {
+                let params = {};
+                if (document) {
+                    params[this.searchProperty] = document.uid;
+                } else {
+                    params[this.searchProperty] = "undefined";
+                }
+                return params;
+            }
+
+        });
+    </script>
+
+</dom-module>

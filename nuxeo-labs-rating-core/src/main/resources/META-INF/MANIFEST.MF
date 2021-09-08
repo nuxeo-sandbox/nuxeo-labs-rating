@@ -1,14 +1,13 @@
-Manifest-Version: 1.0
-Bundle-SymbolicName: nuxeo-labs-rating-core
-Bundle-Name: nuxeo-labs-rating-core
-Bundle-Version: 1.0.qualifier
 Bundle-ClassPath: .
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ManifestVersion: 2
+Manifest-Version: 1.0
+Bundle-Name: nuxeo-labs-rating-core
 Bundle-Vendor: Nuxeo
+Bundle-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: nuxeo-labs-rating-core
 Nuxeo-Component: OSGI-INF/extensions/operations-contrib.xml,
     OSGI-INF/extensions/schema-contrib.xml,
     OSGI-INF/extensions/type-contrib.xml,
     OSGI-INF/extensions/service-contrib.xml,
-    OSGI-INF/extensions/adapter-contrib.xml
+    OSGI-INF/extensions/adapter-contrib.xml,
+    OSGI-INF/extensions/page-provider-contrib.xml
