@@ -4,7 +4,7 @@
     <template>
         <style include="iron-flex iron-flex-alignment">
             .avg {
-                margin-left:8px;
+                margin-left: 8px;
             }
 
         </style>
@@ -61,11 +61,11 @@
                 'updateAverage(aggregations)'
             ],
 
-            _display: function(average) {
-                return average!== undefined && average !== null;
+            _display: function (average) {
+                return average !== undefined && average !== null;
             },
 
-            updateDocId: function() {
+            updateDocId: function () {
                 if (this.docId === undefined)
                     return;
                 this.docId = this.docId.replace("\/", "");
@@ -91,19 +91,18 @@
                             },
                             aggregations: {
                                 doc_rating_avg_agg: {
-                                    avg : {
-                                        field : "rating:rating",
+                                    avg: {
+                                        field: "rating:rating",
                                     }
                                 }
                             }
                         }
                     };
-                //this.$.ratingProvider.execute();
             },
 
-            updateAverage: function() {
+            updateAverage: function () {
                 this.doc_count = this.aggregations.doc_rating_agg_filter.doc_count;
-                if (this.doc_count >0) {
+                if (this.doc_count > 0) {
                     this.average = this.aggregations.doc_rating_agg_filter.doc_rating_avg_agg.value;
                     this.average_star = Math.round(this.average);
                 } else {

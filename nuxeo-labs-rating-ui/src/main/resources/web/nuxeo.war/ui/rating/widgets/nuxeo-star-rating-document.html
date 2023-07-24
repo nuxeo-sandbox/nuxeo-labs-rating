@@ -1,100 +1,96 @@
 <link rel="import" href="nuxeo-star-rating.html">
 
 <dom-module id='nuxeo-star-rating-document'>
-   <template>
-      <style include="nuxeo-styles">
-         .comment {
-            margin-top: 16px;
-            margin-bottom: 16px;
-         }
-      </style>
-      <nuxeo-operation id="GetRating" op="GetRating" input="{{docId}}" on-response="handleResponse"></nuxeo-operation>
-      <nuxeo-operation id="Rate" op="Rate" input="{{docId}}" params="{{params}}"></nuxeo-operation>
-      <nuxeo-star-rating rating="{{vote}}"></nuxeo-star-rating>
-      <nuxeo-textarea class="comment" label="My Comment" value="{{comment}}"></nuxeo-textarea>
-      <template is="dom-if" if="{{changed}}">
-         <paper-button raised on-click="handleSave">Save</paper-button>
-         <paper-button raised on-click="handleCancel">Cancel</paper-button>
-      </template>
-   </template>
-   <script>
-       Polymer({
-           is: 'nuxeo-star-rating-document',
-           properties: {
-               docId: {
-                   type: String,
-                   notify: true
-               },
-               params: {
-                   type: Object,
-                   notify: true
-               },
-               vote: {
-                   type: Number,
-                   value: 0,
-                   notify: true
-               },
-               save: {
-                   type: Boolean,
-                   value: false
-               },
-               comment: {
-                   type: String,
-                   notify: true
-               },
-               changed: {
-                   type: Boolean,
-                   notify: true,
-                   value: false
-               }
-           },
+    <template>
+        <style include="nuxeo-styles">
+            .comment {
+                margin-top: 16px;
+                margin-bottom: 16px;
+            }
+        </style>
+        <nuxeo-operation id="GetRating" op="GetRating" input="{{docId}}" on-response="handleResponse"></nuxeo-operation>
+        <nuxeo-operation id="Rate" op="Rate" input="{{docId}}" params="{{params}}"></nuxeo-operation>
+        <nuxeo-star-rating rating="{{vote}}"></nuxeo-star-rating>
+        <nuxeo-textarea class="comment" label="My Comment" value="{{comment}}"></nuxeo-textarea>
+        <template is="dom-if" if="{{changed}}">
+            <paper-button raised on-click="handleSave">Save</paper-button>
+            <paper-button raised on-click="handleCancel">Cancel</paper-button>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'nuxeo-star-rating-document',
+            properties: {
+                docId: {
+                    type: String,
+                    notify: true
+                },
+                params: {
+                    type: Object,
+                    notify: true
+                },
+                vote: {
+                    type: Number,
+                    value: 0,
+                    notify: true
+                },
+                save: {
+                    type: Boolean,
+                    value: false
+                },
+                comment: {
+                    type: String,
+                    notify: true
+                },
+                changed: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                }
+            },
 
-           observers: [
-               // update the suggestion
-               'change(vote,comment)',
-               'updateDocId(docId)'
-           ],
+            observers: [
+                // update the suggestion
+                'change(vote,comment)',
+                'updateDocId(docId)'
+            ],
 
-           ready: function() {
-               console.log("-- nuxeo-star-rating-my ready");
-           },
+            handleResponse: function (e) {
+                var myvote = e.detail.response;
+                this.vote = myvote.rating;
+                this.comment = myvote.comment;
+                this.save = true;
+            },
 
-           handleResponse: function(e) {
-               var myvote = e.detail.response;
-               this.vote = myvote.rating;
-               this.comment = myvote.comment;
-               this.save = true;
-           },
+            updateDocId: function () {
+                if (this.docId === undefined)
+                    return;
+                this.docId = this.docId.replace("\/", "");
+                this.$.GetRating.execute();
+            },
 
-           updateDocId: function() {
-               if (this.docId === undefined)
-                   return;
-               this.docId = this.docId.replace("\/", "");
-               this.$.GetRating.execute();
-           },
+            handleSave: function () {
+                if (!this.save)
+                    return;
+                this.params = {
+                    rating: this.vote,
+                    comment: this.comment
+                };
+                this.$.Rate.execute();
+                this.changed = false;
+            },
 
-           handleSave: function() {
-               if (!this.save)
-                   return;
-               this.params = {
-                   rating: this.vote,
-                   comment: this.comment
-               };
-               this.$.Rate.execute();
-               this.changed = false;
-           },
+            handleCancel: function () {
+                this.processResponse();
+                this.changed = false;
+            },
 
-           handleCancel: function() {
-               this.processResponse();
-               this.changed = false;
-           },
+            change: function () {
+                if (this.save) {
+                    this.changed = true;
+                }
+            }
 
-           change: function() {
-               if (this.save) {
-                   this.changed = true;
-               }
-           }
-
-       });
-   </script>
+        });
+    </script>
 </dom-module>

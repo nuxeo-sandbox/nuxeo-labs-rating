@@ -2,52 +2,52 @@
 <link rel="import" href="nuxeo-star-rating-distribution.html">
 
 <dom-module id='nuxeo-star-rating-stats'>
-   <template>
-      <style>
-         .main {
-            width: 100%;
-         }
+    <template>
+        <style>
+            .main {
+                width: 100%;
+            }
 
-         .rowElement {
-            display: inline-flex;
-            vertical-align: middle;
-         }
+            .rowElement {
+                display: inline-flex;
+                vertical-align: middle;
+            }
 
-         .container {
-            margin-top: 2%;
-            margin-bottom: 2%;
-         }
+            .container {
+                margin-top: 2%;
+                margin-bottom: 2%;
+            }
 
-         .average {
-            margin-bottom: 1%;
-         }
+            .average {
+                margin-bottom: 1%;
+            }
 
-         .label {
-            margin-right: 2%;
-         }
-      </style>
-      <div class="main">
-         <div class="container">
-            <div class="average">
-               <nuxeo-star-rating-avg doc-id="[[docId]]"></nuxeo-star-rating-avg>
+            .label {
+                margin-right: 2%;
+            }
+        </style>
+        <div class="main">
+            <div class="container">
+                <div class="average">
+                    <nuxeo-star-rating-avg doc-id="[[docId]]"></nuxeo-star-rating-avg>
+                </div>
+                <nuxeo-star-rating-distribution doc-id="[[docId]]"></nuxeo-star-rating-distribution>
             </div>
-            <nuxeo-star-rating-distribution doc-id="[[docId]]"></nuxeo-star-rating-distribution>
-         </div>
-      </div>
-   </template>
-   <script>
-       Polymer({
-           is: 'nuxeo-star-rating-stats',
-           properties: {
-               docId: {
-                   type: String,
-                   notify: true
-               }
-           },
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'nuxeo-star-rating-stats',
+            properties: {
+                docId: {
+                    type: String,
+                    notify: true
+                }
+            },
 
-           ready: function() {
-               console.log("-- nuxeo-document-rating ready");
-           }
-       });
-   </script>
+            ready: function () {
+                console.log("-- nuxeo-document-rating ready");
+            }
+        });
+    </script>
 </dom-module>

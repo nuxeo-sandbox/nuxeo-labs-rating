@@ -1,166 +1,165 @@
 <dom-module id='nuxeo-star-rating-distribution'>
-      <template>
-            <style>
-                  .star {
-                        width: 18px;
-                        height: 17px;
-                        margin-right: 5px;
-                        background: url(../../../img/rating.png) no-repeat;
-                  }
+    <template>
+        <style>
+            .star {
+                width: 18px;
+                height: 17px;
+                margin-right: 5px;
+                background: url(../../../img/rating.png) no-repeat;
+            }
 
-                  td {
-                        padding: 2px;
-                        vertical-align: middle;
-                  }
+            td {
+                padding: 2px;
+                vertical-align: middle;
+            }
 
-                  paper-progress {
-                        --paper-progress-height: 1em;
-                        --paper-progress-active-color: #ff9800;
-                        width: 150px;
-                  }
-            </style>
+            paper-progress {
+                --paper-progress-height: 1em;
+                --paper-progress-active-color: #ff9800;
+                width: 150px;
+            }
+        </style>
 
-            <nuxeo-es-search auto id="ratingProvider" query="[[query]]" aggregates="[[aggregates]]"
-                             aggregations="{{aggregations}}"></nuxeo-es-search>
+        <nuxeo-es-search auto id="ratingProvider" query="[[query]]" aggregates="[[aggregates]]"
+                         aggregations="{{aggregations}}"></nuxeo-es-search>
 
 
-            <table>
-                  <template is="dom-repeat" items="[[buckets]]">
-                        <tr>
-                              <td>
-                                    <div>[[item.from]] star</div>
-                              </td>
-                              <td>
-                                    <div></div>
-                              </td>
-                              <td>
-                                    <paper-progress class="bar" value="[[item.doc_count]]"></paper-progress>
-                              </td>
-                              <td>
-                                    <span>[[item.doc_count]]%</span>
-                              </td>
-                        </tr>
-                  </template>
-            </table>
+        <table>
+            <template is="dom-repeat" items="[[buckets]]">
+                <tr>
+                    <td>
+                        <div>[[item.from]] star</div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <paper-progress class="bar" value="[[item.doc_count]]"></paper-progress>
+                    </td>
+                    <td>
+                        <span>[[item.doc_count]]%</span>
+                    </td>
+                </tr>
+            </template>
+        </table>
 
-      </template>
-      <script>
-          Polymer({
-              is: 'nuxeo-star-rating-distribution',
-              // Expose properties
-              properties: {
-                  docId: {
-                      type: String,
-                      notify: true
-                  },
-                  query: {
-                      type: Object,
-                      notify: true
-                  },
-                  aggregates: {
-                      type: Object,
-                      notify: true
-                  },
-                  aggregations: {
-                      type: Object,
-                      notify: true
-                  },
-                  buckets: {
-                      type: Object,
-                      notify: true,
-                      value: function() {
-                          return [];
-                      }
-                  }
-              },
+    </template>
+    <script>
+        Polymer({
+            is: 'nuxeo-star-rating-distribution',
+            // Expose properties
+            properties: {
+                docId: {
+                    type: String,
+                    notify: true
+                },
+                query: {
+                    type: Object,
+                    notify: true
+                },
+                aggregates: {
+                    type: Object,
+                    notify: true
+                },
+                aggregations: {
+                    type: Object,
+                    notify: true
+                },
+                buckets: {
+                    type: Object,
+                    notify: true,
+                    value: function () {
+                        return [];
+                    }
+                }
+            },
 
-              observers: [
-                  // update the suggestion
-                  'updateDocId(docId)',
-                  'updateBucket(aggregations)'
-              ],
+            observers: [
+                // update the suggestion
+                'updateDocId(docId)',
+                'updateBucket(aggregations)'
+            ],
 
-              ready: function() {
-                  console.log("-- nuxeo-rating-stats ready");
-              },
+            ready: function () {
+                console.log("-- nuxeo-rating-stats ready");
+            },
 
-              updateDocId: function() {
-                  if (this.docId === undefined)
-                      return;
-                  this.docId = this.docId.replace("\/", "");
+            updateDocId: function () {
+                if (this.docId === undefined)
+                    return;
+                this.docId = this.docId.replace("\/", "");
 
-                  this.query = {
-                      bool: {
-                          must: [
-                              {
-                                  constant_score: {
-                                      filter: {
-                                          term: {
-                                              "rating:headId": this.docId
-                                          }
-                                      }
-                                  }
-                              }
-                          ]
-                      }
-                  },
-                      this.aggregates = {
-                          document_vote_agg_filter: {
-                              filter: {
-                                  match_all: {}
-                              },
-                              aggregations: {
-                                  document_vote_agg: {
-                                      range: {
-                                          field: "rating:rating",
-                                          keyed : true,
-                                          ranges: [
-                                              {
-                                                  "key": "5",
-                                                  "from": 5
-                                              }, {
-                                                  "key": "4",
-                                                  "from": 4,
-                                                  "to": 5
-                                              }, {
-                                                  "key": "3",
-                                                  "from": 3,
-                                                  "to": 4
-                                              }, {
-                                                  "key": "2",
-                                                  "from": 2,
-                                                  "to": 3
-                                              }, {
-                                                  "key": "1",
-                                                  "from": 1,
-                                                  "to": 2
-                                              }
-                                          ]
-                                      }
-                                  }
-                              }
-                          }
-                      };
-                  //this.$.ratingProvider.execute();
-              },
+                this.query = {
+                    bool: {
+                        must: [
+                            {
+                                constant_score: {
+                                    filter: {
+                                        term: {
+                                            "rating:headId": this.docId
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                    this.aggregates = {
+                        document_vote_agg_filter: {
+                            filter: {
+                                match_all: {}
+                            },
+                            aggregations: {
+                                document_vote_agg: {
+                                    range: {
+                                        field: "rating:rating",
+                                        keyed: true,
+                                        ranges: [
+                                            {
+                                                "key": "5",
+                                                "from": 5
+                                            }, {
+                                                "key": "4",
+                                                "from": 4,
+                                                "to": 5
+                                            }, {
+                                                "key": "3",
+                                                "from": 3,
+                                                "to": 4
+                                            }, {
+                                                "key": "2",
+                                                "from": 2,
+                                                "to": 3
+                                            }, {
+                                                "key": "1",
+                                                "from": 1,
+                                                "to": 2
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    };
+            },
 
-              updateBucket: function() {
-                  var tmpbuckets = this.aggregations.document_vote_agg_filter.document_vote_agg.buckets;
-                  var total = this.aggregations.document_vote_agg_filter.doc_count;
-                  //tmpbuckets.reverse();
+            updateBucket: function () {
+                var tmpbuckets = this.aggregations.document_vote_agg_filter.document_vote_agg.buckets;
+                var total = this.aggregations.document_vote_agg_filter.doc_count;
+                //tmpbuckets.reverse();
 
-                  if (this.buckets.length > 0) {
-                      this.splice('buckets', 0, this.buckets.length);
-                  }
-                  for (var i = 5; i >= 0; i--) {
-                      var bucket = tmpbuckets[""+i];
-                      if (total != 0) {
-                          bucket.doc_count = Math.round((bucket.doc_count / total)*100);
-                      }
-                      this.push('buckets',bucket);
-                  }
-              }
-          });
-      </script>
+                if (this.buckets.length > 0) {
+                    this.splice('buckets', 0, this.buckets.length);
+                }
+                for (var i = 5; i >= 0; i--) {
+                    var bucket = tmpbuckets["" + i];
+                    if (total != 0) {
+                        bucket.doc_count = Math.round((bucket.doc_count / total) * 100);
+                    }
+                    this.push('buckets', bucket);
+                }
+            }
+        });
+    </script>
 
 </dom-module>

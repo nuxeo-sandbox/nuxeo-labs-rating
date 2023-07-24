@@ -37,7 +37,8 @@
         </nuxeo-page-provider>
 
 
-        <nuxeo-results id="results" name="[[resultconfigname]]" nx-provider="[[nxProvider]]" selected-items="{{selectedItems}}">
+        <nuxeo-results id="results" name="[[resultconfigname]]" nx-provider="[[nxProvider]]"
+                       selected-items="{{selectedItems}}">
             <nuxeo-data-table name="table" icon="nuxeo:view-list"
                               class="results"
                               settings-enabled
@@ -50,14 +51,16 @@
                     </template>
                 </nuxeo-data-table-column>
 
-                <nuxeo-data-table-column name="[[i18n('documentContentView.datatable.header.rating')]]" field="rating:rating"
+                <nuxeo-data-table-column name="[[i18n('documentContentView.datatable.header.rating')]]"
+                                         field="rating:rating"
                                          sort-by="[[_displaySort(document, 'rating:rating')]]">
                     <template>
                         <nuxeo-tag>[[item.properties.rating:rating]]</nuxeo-tag>
                     </template>
                 </nuxeo-data-table-column>
 
-                <nuxeo-data-table-column name="[[i18n('documentContentView.datatable.header.comment')]]" field="rating:comment">
+                <nuxeo-data-table-column name="[[i18n('documentContentView.datatable.header.comment')]]"
+                                         field="rating:comment">
                     <template>
                         <div>[[item.properties.rating:comment]]</div>
                     </template>
@@ -101,7 +104,7 @@
                 ];
             },
 
-            _computeParams: function(document) {
+            _computeParams: function (document) {
                 let params = {};
                 if (document) {
                     params[this.searchProperty] = document.uid;

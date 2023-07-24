@@ -1,90 +1,89 @@
 <dom-module id='nuxeo-star-rating'>
-  <template>
-    <style>
-      #starRating {
-        display: inline-block;
-      }
-      .star {
-        display: inline-block;
-        width: 18px;
-        height: 17px;
-        background: url(../../../img/rating.png) no-repeat 0 -17px;
-      }
-      .star.check {
-        background-position: 0 0;
-      }
-    </style>
-    <div id="rating">
-      <template is="dom-if" if="{{_stars}}">
-        <template is="dom-repeat" items="{{_stars}}">
-          <span id="{{index}}" class$="{{item.value}}" on-click="handleClick"></span>
-        </template>
-      </template>
-    </div>
-  </template>
+    <template>
+        <style>
+            #starRating {
+                display: inline-block;
+            }
 
-  <script>
-      Polymer({
-          is: 'nuxeo-star-rating',
-          // Expose properties
-          properties: {
-              readOnly: {
-                  type: Boolean,
-                  value: false,
-                  notify: true
-              },
-              rating: {
-                  type: Number,
-                  value: 0,
-                  notify: true
-              },
-              starCount: {
-                  type: Number,
-                  value: 5,
-                  notify: true
-              },
-              _stars: {
-                  type: Array,
-                  value: function() {
-                      return [];
-                  },
-                  notify: true
-              }
-          },
+            .star {
+                display: inline-block;
+                width: 18px;
+                height: 17px;
+                background: url(../../../img/rating.png) no-repeat 0 -17px;
+            }
 
-          observers: [
-              'updateStars(rating)'
-          ],
+            .star.check {
+                background-position: 0 0;
+            }
+        </style>
+        <div id="rating">
+            <template is="dom-if" if="{{_stars}}">
+                <template is="dom-repeat" items="{{_stars}}">
+                    <span id="{{index}}" class$="{{item.value}}" on-click="handleClick"></span>
+                </template>
+            </template>
+        </div>
+    </template>
 
-          ready: function() {
-              console.log("--star rating ready");
-              this.updateStars();
-          },
+    <script>
+        Polymer({
+            is: 'nuxeo-star-rating',
+            // Expose properties
+            properties: {
+                readOnly: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
+                },
+                rating: {
+                    type: Number,
+                    value: 0,
+                    notify: true
+                },
+                starCount: {
+                    type: Number,
+                    value: 5,
+                    notify: true
+                },
+                _stars: {
+                    type: Array,
+                    value: function () {
+                        return [];
+                    },
+                    notify: true
+                }
+            },
 
-          handleClick: function(e) {
-              if (this.readOnly) {
-                  return;
-              }
-              console.log("--handle click");
-              //this.rating = parseInt(e.srcElement.id) + 1;
-              this.rating = parseInt(e.currentTarget.id)+1;
-              this.updateStars();
-          },
+            observers: [
+                'updateStars(rating)'
+            ],
 
-          updateStars: function() {
-              if (this._stars === undefined)
-                  return;
-              this.splice('_stars', 0, 5);
-              for (var i = 1; i <= this.starCount; i++) {
-                  this.push('_stars', {
-                      value: i <= this.rating
-                          ? 'star check'
-                          : 'star'
-                  });
-              }
-              this.set('_stars', this._stars);
-          }
-      });
-  </script>
+            ready: function () {
+                this.updateStars();
+            },
+
+            handleClick: function (e) {
+                if (this.readOnly) {
+                    return;
+                }
+                this.rating = parseInt(e.currentTarget.id) + 1;
+                this.updateStars();
+            },
+
+            updateStars: function () {
+                if (this._stars === undefined)
+                    return;
+                this.splice('_stars', 0, 5);
+                for (var i = 1; i <= this.starCount; i++) {
+                    this.push('_stars', {
+                        value: i <= this.rating
+                            ? 'star check'
+                            : 'star'
+                    });
+                }
+                this.set('_stars', this._stars);
+            }
+        });
+    </script>
 
 </dom-module>
