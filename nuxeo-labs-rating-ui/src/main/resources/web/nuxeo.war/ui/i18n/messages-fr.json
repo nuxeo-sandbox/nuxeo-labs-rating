@@ -1,0 +1,8 @@
+{
+  "label.rating.tab": "Avis",
+  "label.rating.all": "Tous les avis",
+  "label.rating.my": "Mon avis",
+  "label.rating.stats": "Statistiques",
+  "documentContentView.datatable.header.rating": "Note",
+  "documentContentView.datatable.header.comment": "Commentaire"
+}
