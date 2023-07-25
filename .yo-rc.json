@@ -4,8 +4,8 @@
     "promptValues": {
       "parent_package": "org.nuxeo.labs.rating",
       "parent_artifact": "nuxeo-labs-rating-parent",
-      "parent_version": "2023.0.0-SNAPSHOT"
+      "parent_version": "2023.1.0-SNAPSHOT"
     },
-    "_nuxeo_version": "2023.0.0-SNAPSHOT"
+    "_nuxeo_version": "2023.1.0-SNAPSHOT"
   }
 }
