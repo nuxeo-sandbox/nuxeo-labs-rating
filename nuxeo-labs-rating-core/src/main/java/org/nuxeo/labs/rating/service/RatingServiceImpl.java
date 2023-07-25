@@ -14,12 +14,14 @@
  * limitations under the License.
  *
  * Contributors:
- *     
+ *
  */
 package org.nuxeo.labs.rating.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
@@ -36,7 +38,7 @@ import org.nuxeo.labs.rating.utils.DocumentHelper;
 
 public class RatingServiceImpl implements RatingService {
 
-    protected static final Log log = LogFactory.getLog(RatingServiceImpl.class);
+    protected static final Logger log = LogManager.getLogger(RatingServiceImpl.class);
 
     @Override
     public void rate(CoreSession session, Rating rating) {
