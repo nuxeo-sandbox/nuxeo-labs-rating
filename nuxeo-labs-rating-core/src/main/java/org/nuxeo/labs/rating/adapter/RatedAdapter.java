@@ -42,7 +42,7 @@ public class RatedAdapter implements Rated {
     @Override
     public double getAverage() {
         Double average = (Double) this.getPropertyValue(PROPERTY_AVG);
-        return average!=null ? average.doubleValue() : 0.0;
+        return average!=null ? average : 0.0;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class RatedAdapter implements Rated {
     @Override
     public long getCount() {
         Long count = (Long) this.getPropertyValue(PROPERTY_COUNT);
-        return count!=null ? count.longValue() : 0;
+        return count!=null ? count : 0;
     }
 
     @Override

@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  * Contributors:
- *     
+ *
  */
 package org.nuxeo.labs.rating.service;
 
@@ -23,8 +23,8 @@ import org.nuxeo.labs.rating.model.Rating;
 
 public interface RatingService {
 
-    public void rate(CoreSession session, Rating rating);
+    void rate(CoreSession session, Rating rating);
 
-    public Rating getRating(CoreSession session, String docId, String username);
+    Rating getRating(CoreSession session, String docId, String username);
 
 }

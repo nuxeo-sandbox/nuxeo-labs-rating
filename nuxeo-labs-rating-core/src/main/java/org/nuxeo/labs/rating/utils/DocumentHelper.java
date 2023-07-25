@@ -27,7 +27,7 @@ public abstract class DocumentHelper {
 
     public static String getHeadDocumentId(DocumentModel doc) {
         CoreSession session = doc.getCoreSession();
-        String headDocumentId = null;
+        String headDocumentId;
         if (doc.isProxy()) {
             DocumentModel targetDoc = session.getSourceDocument(doc.getRef());
             if (targetDoc.isVersion()) {

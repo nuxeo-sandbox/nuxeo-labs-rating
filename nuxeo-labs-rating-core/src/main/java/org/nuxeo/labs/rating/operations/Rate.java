@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  * Contributors:
- *     
+ *
  */
 
 package org.nuxeo.labs.rating.operations;
@@ -52,10 +52,9 @@ public class Rate {
         String username = session.getPrincipal().getName();
         RatingService service = Framework.getService(RatingService.class);
         Rating ratingObj = new RatingImpl(rating, doc.getId(), username, comment);
-        CoreSession sysSession = CoreInstance.openCoreSessionSystem(session.getRepositoryName());
+        CoreSession sysSession =  CoreInstance.getCoreSessionSystem(session.getRepositoryName());
         service.rate(sysSession, ratingObj);
         sysSession.save();
-        sysSession.close();
         return doc;
     }
 
