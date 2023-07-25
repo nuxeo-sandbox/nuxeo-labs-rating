@@ -9,11 +9,11 @@
 .idea
 target
 bin
- 
+
 # Logs and databases #
 ######################
 *.log
- 
+
 # OS generated files #
 ######################
 .DS_Store
@@ -24,3 +24,4 @@ bin
 .~lock.*
 
 *.iml
+.env

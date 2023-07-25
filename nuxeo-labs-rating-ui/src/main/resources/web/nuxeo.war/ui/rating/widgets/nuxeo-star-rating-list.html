@@ -4,26 +4,14 @@
     <template>
 
         <style include="nuxeo-styles">
-
             :host {
                 display: block;
             }
 
-            *[role=widget] {
-                padding: 5px;
-            }
-
             nuxeo-results {
+                --nuxeo-results-view-height: calc(100vh - 174px - var(--nuxeo-app-top));
                 --nuxeo-document-content-min-height: calc(100vh - 256px - var(--nuxeo-app-top));
             }
-
-            .results {
-                @apply --layout-vertical;
-                @apply --layout-flex;
-                min-height: var(--nuxeo-document-content-min-height, calc(100vh - 216px - var(--nuxeo-app-top)));
-                margin-bottom: var(--nuxeo-document-content-margin-bottom, 0);
-            }
-
         </style>
 
         <nuxeo-page-provider id="nxProvider"
@@ -112,6 +100,10 @@
                     params[this.searchProperty] = "undefined";
                 }
                 return params;
+            },
+
+            _setupDnD: function() {
+                //do nothing
             }
 
         });
